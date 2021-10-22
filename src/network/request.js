@@ -16,7 +16,7 @@ export function request(config) {
 
   // axios 响应拦截
   // 对返回的数据做一些处理
-  instance.interceptors.respont.use(res => {
+  instance.interceptors.response.use(res => {
     return res.data
   }, err => console.log(err))
 

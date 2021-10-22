@@ -5,8 +5,31 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/login/Login.vue')
+    redirect: '/home'
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('@/views/home/Home'),
+    meta: { title: '首页' }
+  },
+  {
+    path: '',
+    component: () => import('@/views/login/Index'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/views/login/childComps/Login'),
+        meta: { title: '登录' }
+      },
+      {
+        path: '/signup',
+        name: 'Signup',
+        component: () => import('@/views/login/childComps/Signup'),
+        meta: { title: '注册' }
+      }
+    ]
   }
 ]
 
