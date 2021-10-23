@@ -7,96 +7,71 @@
         <el-link type="primary" @click="$router.push('/signup')">点击注册</el-link>
       </div>
     </div>
-    <el-form
-      :model="loginData"
-      status-icon
-      :rules="loginFormRules"
-      ref="loginData"
-    >
-      <el-form-item prop="username">
-        <el-input
-          placeholder="手机 / 邮箱"
-          v-model="loginData.username"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          placeholder="请输入密码"
-          type="password"
-          show-password
-          v-model="loginData.password"
-        ></el-input>
-      </el-form-item>
-      <div  class="captcha-link">
-        <el-link type="primary" @click="typeChange">{{typeText}}</el-link>
-      </div>
-      <el-form-item>
-        <el-button
-          class="login-button"
-          type="danger"
-          @click="submitForm('loginData')"
-          >登录</el-button
-        >
-      </el-form-item>
-    </el-form>
+    <!-- 账号登录 -->
+    <LoginAccount v-if="!isCaptcha && !isErweima" @accountChange="accountChange" :typeText="type"/>
+    <!-- 验证码登录 -->
+    <LoginCaptcha v-else-if="isCaptcha && !isErweima" @captchaChange="captchaChange" :typeText="type"/>
+    <!-- 二维码区域 -->
+    <LoginErWeiMa v-if="isErweima"/>
     <el-link type="primary">已有账号, 忘记密码？</el-link>
     <br />
     <br />
-    <el-link type="info" v-if="device"
-      ><i class="iconfont icon-erweima"></i> 扫码登录</el-link
+    <el-link @click="loginErweimaChange" type="info" v-if="device"
+      ><i class="iconfont" :class="[isErweima ? 'el-icon-user' : 'icon-erweima']"></i> {{isErweima ? '账号密码登录' : '二维码登录'}}</el-link
     >
   </div>
 </template>
 
 <script>
-import { loginDataFormRules } from '@/mixin/FormRules'
-// 网络数据
-import { loginPhone } from '@/api/login/login'
+// 引入二维码组件
+import LoginErWeiMa from './LoginErWeiMa'
+// 账号登录组件
+import LoginAccount from './LoginAccount'
+// 验证码登录组件
+import LoginCaptcha from './LoginCaptcha'
 export default {
   name: 'Login',
-  mixins: [loginDataFormRules],
+  components: {
+    LoginErWeiMa,
+    LoginAccount,
+    LoginCaptcha
+  },
   data() {
     return {
       // 登录数据
-      loginData: {
-        username: '',
-        password: ''
-      },
+      loginData: {},
       // 登录方式
-      type: '账号密码登录'
+      type: '验证码登录',
+      // 是否二维码登录
+      isErweima: false
     }
   },
   computed: {
     // 界面类型 PC , 移动
     device() {
+      if (this.$store.state.app.device === 'mobile') {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.isErweima = false
+      }
       return this.$store.state.app.device === 'desktop'
     },
-    typeText() {
-      return this.type === '账号密码登录' ? '验证码登录' : '账号密码登录'
+    // 是否为验证码登录
+    isCaptcha() {
+      return this.type !== '验证码登录'
     }
   },
   methods: {
-    // 登录
-    submitForm(ref) {
-      this.$refs[ref].validate(async valid => {
-        if (!valid) return this.$message('error', '请输入内容')
-        // 账号密码登录
-        if (this.type === '账号密码登录') {
-          const data = await loginPhone(this.loginData)
-          console.log(data)
-          // if (code !== 200) return this.$message('error', '密码错误')
-        } else { // 验证码登录
-
-        }
-      })
+    // 监听账号密码登录切换
+    accountChange() {
+      this.type = '账号密码登录'
     },
-    // 登录方式切换
-    typeChange() {
-      if (this.type === '账号密码登录') {
-        this.type = '验证码登录'
-      } else {
-        this.type = '账号密码登录'
-      }
+    // 监听验证码登录切换
+    captchaChange() {
+      this.type = '验证码登录'
+    },
+    // 二维码登录切换
+    loginErweimaChange() {
+      this.isErweima = !this.isErweima
     }
   }
 }
@@ -112,14 +87,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .login-button{
-      width: 100%;
-    }
-    .captcha-link{
-      width: 100%;
-      text-align: right;
-      margin-bottom: 10px;
     }
   }
 </style>

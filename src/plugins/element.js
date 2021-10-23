@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Row, Col, Message, Form, FormItem, Button, Input, Link } from 'element-ui'
+import { Row, Col, Message, Form, FormItem, Button, Input, Link, Image } from 'element-ui'
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Form)
@@ -7,6 +7,7 @@ Vue.use(FormItem)
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Link)
+Vue.use(Image)
 
 Vue.prototype.$message = function(type, msg) {
   Message({

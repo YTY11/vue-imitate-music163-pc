@@ -15,7 +15,7 @@
               class="icon"
               :style="{ left: !device ? '50%' : '' }"
             >
-              <img src="~@/assets/logo.png" alt="logo" />
+              <img src="~@/assets/img/logo.png" alt="logo" />
             </div>
             <!-- 登录 -->
             <router-view/>
@@ -69,7 +69,7 @@ export default {
 .login {
   width: 100%;
   height: 100%;
-  background: url('~@/assets/login_bg.jpg') no-repeat;
+  background: url('~@/assets/img/login_bg.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   overflow: auto;
@@ -97,7 +97,7 @@ export default {
         justify-content: center;
         padding: 0 20px;
         box-sizing: border-box;
-        background: url('~@/assets/login_bg.jpg') no-repeat;
+        background: url('~@/assets/img/login_bg.jpg') no-repeat;
         background-size: cover;
         background-position: center;
       }
