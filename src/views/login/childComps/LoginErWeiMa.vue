@@ -52,19 +52,19 @@ export default {
       this.erWeiMaStatus = 801
       // 获取二维码登录状态
       this.timer = setInterval(async() => {
-        const erWeiMaStatus = await getErWeiMaStatus(this.erWeiMakey)
-        console.log(erWeiMaStatus)
-        this.erWeiMaStatus = erWeiMaStatus.code
-        if (erWeiMaStatus.code === 800) {
+        const { code, cookie } = await getErWeiMaStatus(this.erWeiMakey)
+        console.log(code)
+        this.erWeiMaStatus = code
+        if (this.erWeiMaStatus === 800) {
           console.log('二维码已过期,请重新获取')
           if (this.timer !== '') {
             clearInterval(this.timer)
           }
         }
-        if (erWeiMaStatus.code === 803) {
+        if (this.erWeiMaStatus === 803) {
           // 这一步会返回cookie
           // erWeiMaStatus.cookie
-          this.$store.commit('user/SET_COOKIE', erWeiMaStatus.cookie)
+          this.$store.commit('user/SET_COOKIE', cookie)
           if (this.timer !== '') {
             clearInterval(this.timer)
           }

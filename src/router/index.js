@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Layout from '@/layout'
 Vue.use(VueRouter)
 
 const routes = [
@@ -8,10 +9,16 @@ const routes = [
     redirect: '/home'
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/views/home/Home'),
-    meta: { title: '首页' }
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/home/Home'),
+        meta: { title: '首页' }
+      }
+    ]
   },
   {
     path: '',

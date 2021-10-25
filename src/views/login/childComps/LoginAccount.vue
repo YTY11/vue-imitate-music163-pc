@@ -18,6 +18,7 @@
         type="password"
         show-password
         v-model.trim="loginData.password"
+        @keydown.native.enter="submitForm('loginData')"
       ></el-input>
     </el-form-item>
     <!-- 登录方式切换 -->
@@ -64,10 +65,11 @@ export default {
       this.$refs[ref].validate(async (valid) => {
         if (!valid) return this.$message('error', '请输入合法内容')
         // 账号密码登录
-        const data = await loginPhone(this.loginData)
-        console.log(data)
-        if (data.code !== 200) return this.$message('error', '密码错误')
+        const { profile, code, cookie, token } = await loginPhone(this.loginData)
+        if (code !== 200) return this.$message('error', '密码错误')
         this.$message('success', '登录成功')
+        this.$store.commit('user/SET_COOKIE', cookie)
+        this.$store.commit('user/SET_TOKEN', token)
         // 跳转首页
         this.$router.push('/home')
         // 登录数据重置

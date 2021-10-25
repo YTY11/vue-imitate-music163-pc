@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { getToken, getCookieData } from '@/utility/user'
+
 import NProgress from 'nprogress' // 进度条
 import 'nprogress/nprogress.css' // 进度条样式
 import { Loading } from 'element-ui'

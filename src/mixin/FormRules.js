@@ -34,7 +34,8 @@ export const loginDataFormRules = {
           { required: true, message: '请输入昵称', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { validator: phoneFormRule, trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }

@@ -22,5 +22,15 @@ export function removeToken() {
 
 // 设置cookie值
 export function setCookieData(data) {
-  Cookies.set('设置cookie值', data)
+  Cookies.set('COOKIE', data)
+}
+
+// 获取cookie值
+export function getCookieData() {
+  Cookies.get('COOKIE')
+}
+
+// 移除cookie
+export function removeCookieData() {
+  Cookies.remove('COOKIE')
 }

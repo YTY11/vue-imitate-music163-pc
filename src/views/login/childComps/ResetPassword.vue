@@ -1,38 +1,47 @@
 <template>
   <el-form
-      :model="loginData"
+      :model="resetData"
       status-icon
       :rules="loginFormRules"
-      ref="loginData"
+      ref="resetData"
     >
-      <!-- 验证码登录 -->
+    <!-- 密码重置 -->
+    <!-- 新密码 -->
+      <el-form-item prop="password">
+        <el-input
+          placeholder="请输入新密码"
+          v-model.trim="resetData.password"
+          type="password"
+          show-password
+        ></el-input>
+      </el-form-item>
       <el-form-item prop="phone">
         <el-input
           placeholder="请输入手机号"
-          v-model.trim="loginData.phone"
+          v-model.trim="resetData.phone"
         ></el-input>
       </el-form-item>
       <el-form-item prop="captcha">
         <el-input
           placeholder="请输入验证码"
-          v-model.trim="loginData.captcha"
-          @keydown.native.enter="submitForm('loginData')"
+          v-model.trim="resetData.captcha"
+          @keydown.native.enter="submitForm('resetData')"
           style="width: 50%"
         ></el-input>
         <!-- 获取验证码按钮 -->
-        <el-button :disabled="isCaptchaTime" @click="getLoginCaptcha('loginData')" style="width: 50%" type="warning" plain>{{captchaText}}</el-button>
+        <el-button :disabled="isCaptchaTime" @click="getLoginCaptcha('resetData')" style="width: 50%" type="warning" plain>{{captchaText}}</el-button>
       </el-form-item>
       <!-- 登录方式切换 -->
-      <div  class="captcha-link">
+      <!-- <div  class="captcha-link">
         <el-link @click="$router.push('/home')">游客访问</el-link>
         <el-link type="primary" @click="typeChange('loginData')">{{typeText}}</el-link>
-      </div>
+      </div> -->
       <el-form-item>
         <el-button
           class="login-button"
           type="danger"
-          @click="submitForm('loginData')"
-          >登录</el-button
+          @click="submitForm('resetData')"
+          >密码重置</el-button
         >
       </el-form-item>
     </el-form>
@@ -54,8 +63,8 @@ export default {
   },
   data() {
     return {
-      // 登录数据
-      loginData: {},
+      // 重置数据
+      resetData: {},
       // 验证码倒计时
       captchaTime: 0,
       // 验证码按钮文本
@@ -78,11 +87,11 @@ export default {
       this.$refs[ref].validate(async valid => {
         if (!valid) return this.$message('error', '请输入合法内容')
         // 验证码校验
-        const data = await captchaVerify(this.loginData)
+        const data = await captchaVerify(this.resetData)
         if (data.code !== 200) return this.$message('error', '验证码错误')
         // 验证码登录
-        const { profile, code, cookie, token } = await loginCaptcha(this.loginData)
-        if (code !== 200) return this.$message('error', '登陆失败')
+        const { profile, code, cookie, token } = await loginCaptcha(this.resetData)
+        if (code !== 200) return this.$message('error', '重置失败')
         this.$message('success', '登录成功')
         this.$store.commit('user/SET_COOKIE', cookie)
         this.$store.commit('user/SET_TOKEN', token)
@@ -96,7 +105,7 @@ export default {
     getLoginCaptcha(ref) {
       this.$refs[ref].validateField('phone', async msg => {
         if (msg !== '') return this.$message('error', '请输入合法手机号')
-        const { code } = await getLoginCaptcha(this.loginData)
+        const { code } = await getLoginCaptcha(this.resetData)
         if (code !== 200) return this.$message('error', '验证码获取失败')
         this.$message('success', '验证码已发送')
 

@@ -30,9 +30,20 @@ export function loginCaptcha(loginData) {
   })
 }
 
+// 验证码验证/captcha/verify
+export function captchaVerify(data) {
+  return request({
+    url: '/captcha/verify',
+    method: 'post',
+    data: {
+      phone: data.phone,
+      captcha: data.captcha
+    }
+  })
+}
+
 // 获取登录验证码
 export function getLoginCaptcha(loginData) {
-  console.log(loginData)
   return request({
     url: '/captcha/sent',
     method: 'post',
@@ -45,7 +56,8 @@ export function getLoginCaptcha(loginData) {
 // 二维码key生成接口
 export function getErWeiMaKey() {
   return request({
-    url: `/login/qr/key?timerstamp=${Date.now()}`
+    url: `/login/qr/key?timerstamp=${Date.now()}`,
+    withCredentials: true
   })
 }
 

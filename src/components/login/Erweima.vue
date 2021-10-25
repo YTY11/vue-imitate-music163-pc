@@ -1,10 +1,13 @@
 <template>
   <div class="erweima">
     <img class="qr-guide" src="~@/assets/img/qr_guide.png" alt="">
-    <el-image class="erweima-img" :src="imgBase64">
-      <!-- 错误图 -->
-      <img slot="error" class="error-img" src="~@/assets/img/error_img.png" alt="">
-    </el-image>
+    <div class="erweima-area">
+      <el-image class="erweima-img" :src="imgBase64">
+        <!-- 错误图 -->
+        <img slot="error" class="error-img" src="~@/assets/img/error_img.png" alt="">
+      </el-image>
+      <p>使用 网易云音乐APP 扫码登录</p>
+    </div>
     <div v-if="erWeiMaStatus === 800 || erWeiMaStatus === 0" class="erweima-img error">
       <el-button v-if="erWeiMaStatus === 800" @click="refreshErWeiMa" type="warning" size="mini">已过期，刷新</el-button>
       <el-button v-if="erWeiMaStatus === 0" @click="refreshErWeiMa" type="warning" size="mini">刷新</el-button>
@@ -49,6 +52,14 @@ export default {
       width: 30%;
       height: 100%;
     }
+    .erweima-area{
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      p{
+        font-size: 13px;
+      }
+    }
     .erweima-img{
       width: 130px;
       height: 120px;
@@ -64,7 +75,8 @@ export default {
       background: rgba($color: #000000, $alpha: .6);
       z-index: 10;
       position: absolute;
-      right: 0;
+      right: 22px;
+      top: 25px;
       line-height: 120px;
     }
     padding: 10px 0;
