@@ -37,6 +37,13 @@ const routes = [
         meta: { title: '注册' }
       }
     ]
+  },
+  // 404页面
+  {
+    path: '*',
+    name: 404,
+    component: () => improt('@/view/error/404'),
+    meta: { title: '页面未找到' }
   }
 ]
 
