@@ -22,6 +22,8 @@ import AppMain from './childComps/AppMain'
 import NavMenu from './childComps/NavMenu'
 // 底部组件
 import Footer from './childComps/Footer'
+
+import resizeHander from '@/mixin/resizeHander'
 export default {
   name: 'Layout',
   components: {
@@ -29,7 +31,19 @@ export default {
     MusicHeader,
     NavMenu,
     Footer
+  },
+  mixins: [resizeHander],
+  computed: {
+    // 判断PC 还是 移动
+    device() {
+      return this.$store.state.app.device === 'desktop'
+    },
+    // 侧边栏是否显示
+    collapse() {
+      return this.$store.state.app.isCollapse
+    }
   }
+
 }
 </script>
 
@@ -38,4 +52,5 @@ export default {
   flex-direction: column;
   height: 100%;
 }
+
 </style>

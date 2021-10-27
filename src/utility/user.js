@@ -27,7 +27,7 @@ export function setCookieData(data) {
 
 // 获取cookie值
 export function getCookieData() {
-  Cookies.get('COOKIE')
+  return Cookies.get('COOKIE')
 }
 
 // 移除cookie

@@ -19,7 +19,6 @@ export default {
 <style lang="scss" scoped>
 .el-input {
   width: 150px;
-  min-width: 100px;
   height: 30px;
   margin-left: 60px;
 }

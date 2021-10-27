@@ -1,9 +1,98 @@
 <template>
-  <el-aside width="200px">Aside</el-aside>
+<div>
+<el-aside width="200px" :class="{'modile' : !device, 'show-modile': !collapse }">
+    <el-menu
+      class="el-menu-vertical-demo"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      @select="select"
+    >
+      <el-menu-item index="2">
+        <i class="iconfont icon-yinle"></i>
+        <span slot="title">发现音乐</span>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <i class="iconfont icon-shipin"></i>
+        <span slot="title">视频</span>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <i class="iconfont icon-zhiboguanli"></i>
+        <span slot="title">直播</span>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <i class="iconfont icon-guangbo"></i>
+        <span slot="title">广播</span>
+      </el-menu-item>
+    </el-menu>
+  </el-aside>
+    <!-- 遮罩 -->
+    <div class="modal" v-if="!device && !collapse" @click="closeModal"></div>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'NavMenu'
+  name: 'NavMenu',
+  computed: {
+    // 判断PC 还是 移动
+    device() {
+      return this.$store.state.app.device === 'desktop'
+    },
+    // 侧边栏是否显示
+    collapse() {
+      return this.$store.state.app.isCollapse
+    }
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    // 选择菜单
+    select(index, path) {
+      console.log(index, path)
+      this.$store.commit('app/SET_COLLAPSE', true)
+    },
+    open() {
+      this.isCollapse = !this.isCollapse
+    },
+    // 关闭遮罩层
+    closeModal() {
+      this.$store.commit('app/SET_COLLAPSE', true)
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+.el-aside{
+  background: #545C64;
+  overflow-x: hidden;
+}
+.modile{
+    transition: all 0.5s;
+    transform: translateX(-200px);
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+}
+.show-modile{
+  transform: translateX(0px);
+}
+.modal{
+  z-index: 5;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: black;
+  opacity: .7;
+  top: 0;
+  right: 0;
+}
+</style>

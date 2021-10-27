@@ -1,5 +1,4 @@
 import { request } from '@/network/request'
-
 // 手机号/邮箱 密码登录
 export function loginPhone(loginData) {
   let isEmail = false

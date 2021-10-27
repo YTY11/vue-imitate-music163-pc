@@ -1,8 +1,9 @@
 // 引入token 设置方法
 import { getToken, setToken, removeToken, setCookieData, getCookieData, removeCookieData } from '@/utility/user'
+
 const state = {
-  cookie: '',
-  token: ''
+  cookie: getCookieData(),
+  token: getToken()
 }
 
 const mutations = {

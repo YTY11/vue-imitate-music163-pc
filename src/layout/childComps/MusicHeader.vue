@@ -1,9 +1,9 @@
 <template>
-  <el-header>
+  <el-header :style="{'padding-left': !device ? 0 : ''}">
     <!-- logo -->
     <Logo/>
     <!-- 前进后退 -->
-    <GoAndBack/>
+    <GoAndBack v-if="device"/>
     <!-- 搜索 -->
     <Seek/>
     <!-- 右侧区域 -->
@@ -27,6 +27,18 @@ export default {
     GoAndBack,
     Seek,
     Right
+  },
+  computed: {
+    // 判断PC 还是 移动
+    device() {
+      return this.$store.state.app.device === 'desktop'
+    }
+  },
+  methods: {
+    // 关闭遮罩层
+    closeModal() {
+      this.$store.commit('app/SET_COLLAPSE', true)
+    }
   }
 }
 </script>
