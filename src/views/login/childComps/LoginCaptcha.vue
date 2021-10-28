@@ -24,7 +24,7 @@
       </el-form-item>
       <!-- 登录方式切换 -->
       <div  class="captcha-link">
-        <el-link @click="$router.push('/home')">游客访问</el-link>
+        <el-link @click="$router.push('/found')">游客访问</el-link>
         <el-link type="primary" @click="typeChange('loginData')">{{typeText}}</el-link>
       </div>
       <el-form-item>
@@ -87,7 +87,7 @@ export default {
         this.$store.commit('user/SET_COOKIE', cookie)
         this.$store.commit('user/SET_TOKEN', token)
         // 跳转首页
-        this.$router.push('/home')
+        this.$router.push('/found')
         // 登录数据重置
         this.loginData = {}
       })

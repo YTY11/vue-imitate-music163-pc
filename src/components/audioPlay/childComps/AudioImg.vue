@@ -22,7 +22,7 @@ export default {
     // 音频名字
     audioName: {
       type: String,
-      default: 'demo'
+      default: 'demosssssssssssssssssss'
     },
     // 作者名字
     authorName: {
@@ -37,17 +37,25 @@ export default {
 .audio-img{
   display: flex;
   align-items: center;
-  width: 100%;
   height: 100%;
   img{
     width: 60px;
     height: 60px;
-    border: 1px solid gray;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    margin-right: 10px;
   }
   div{
+    width: 100px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    span{
+      overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    }
   }
 }
 </style>

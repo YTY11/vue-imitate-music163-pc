@@ -110,7 +110,7 @@ export default {
         this.$store.commit('user/SET_COOKIE', cookie)
         this.$store.commit('user/SET_TOKEN', token)
         // 跳转首页
-        this.$router.push('/home')
+        this.$router.push('/found')
         // 登录数据重置
         this.loginData = {}
       })

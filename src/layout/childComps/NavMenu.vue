@@ -8,15 +8,15 @@
       active-text-color="#ffd04b"
       @select="select"
     >
-      <el-menu-item index="2">
+      <el-menu-item index="1">
         <i class="iconfont icon-yinle"></i>
         <span slot="title">发现音乐</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="2">
         <i class="iconfont icon-shipin"></i>
         <span slot="title">视频</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="3">
         <i class="iconfont icon-zhiboguanli"></i>
         <span slot="title">直播</span>
       </el-menu-item>
@@ -80,13 +80,13 @@ export default {
     position: absolute;
     top: 0;
     height: 100%;
-    z-index: 10;
+    z-index: 99999;
 }
 .show-modile{
   transform: translateX(0px);
 }
 .modal{
-  z-index: 5;
+  z-index: 9999;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -94,5 +94,10 @@ export default {
   opacity: .7;
   top: 0;
   right: 0;
+}
+.el-menu-item{
+  span{
+    margin-left: 5px;
+  }
 }
 </style>

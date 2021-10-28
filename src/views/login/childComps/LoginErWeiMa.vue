@@ -70,7 +70,7 @@ export default {
           }
           const data = await loginStatus()
           console.log(data)
-          this.$router.push('/home')
+          this.$router.push('/found')
           console.log('授权登录成功')
         }
       }, 3000)

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2885999 */
-  src: url('//at.alicdn.com/t/font_2885999_tm2a0wbr8mr.woff2?t=1635328326387') format('woff2'),
-       url('//at.alicdn.com/t/font_2885999_tm2a0wbr8mr.woff?t=1635328326387') format('woff'),
-       url('//at.alicdn.com/t/font_2885999_tm2a0wbr8mr.ttf?t=1635328326387') format('truetype');
+  src: url('//at.alicdn.com/t/font_2885999_tlgikdpviah.woff2?t=1635400693500') format('woff2'),
+       url('//at.alicdn.com/t/font_2885999_tlgikdpviah.woff?t=1635400693500') format('woff'),
+       url('//at.alicdn.com/t/font_2885999_tlgikdpviah.ttf?t=1635400693500') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-geciweidianji:before {
+  content: "\e727";
+}
+
+.icon-bofang02-xianxing:before {
+  content: "\e68e";
+}
+
+.icon-bofang-xunhuanbofang:before {
+  content: "\e68d";
+}
+
+.icon-bofang01-xianxing:before {
+  content: "\e68f";
+}
+
+.icon-bofang-xiayige:before {
+  content: "\e690";
+}
+
+.icon-quanping4-xianxing:before {
+  content: "\e6e7";
+}
+
+.icon-shengyin02-xianxing:before {
+  content: "\e6ea";
+}
+
+.icon-shengyin04-xianxing:before {
+  content: "\e6eb";
+}
+
+.icon-liebiao1:before {
+  content: "\e6e9";
+}
+
+.icon-quanping3-xianxing:before {
+  content: "\e6e8";
+}
+
+.icon-bofang-xiayige-copy:before {
+  content: "\e728";
 }
 
 .icon-shipin:before {

@@ -1,10 +1,10 @@
 <template>
-  <el-container class="index">
+  <el-container class="layout">
     <!-- 头部区域 -->
     <MusicHeader/>
     <el-container>
     <!-- 侧边导航区域 -->
-    <NavMenu/>
+    <NavMenu class="nav-menu"/>
     <!-- 内容区域 -->
     <AppMain/>
      </el-container>
@@ -48,9 +48,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.index{
+.layout{
   flex-direction: column;
   height: 100%;
+  .nav-menu{
+    background: #545C64;
+  }
 }
 
 </style>

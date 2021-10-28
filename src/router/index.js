@@ -6,16 +6,16 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/found'
   },
   {
     path: '',
     component: Layout,
     children: [
       {
-        path: '/home',
-        name: 'Home',
-        component: () => import('@/views/home/Home'),
+        path: '/found',
+        name: 'Found',
+        component: () => import('@/views/found/Found'),
         meta: { title: '首页' }
       }
     ]
