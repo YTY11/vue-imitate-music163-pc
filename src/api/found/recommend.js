@@ -3,7 +3,13 @@ import { request } from '@/network/request'
 // 轮播图数据
 export function getBanner() {
   return request({
-    url: '/banner'
+    url: '/banner?type=0'
+  })
+}
+// 推荐歌单
+export function getPersonalized() {
+  return request({
+    url: '/personalized'
   })
 }
 // 推荐 mv

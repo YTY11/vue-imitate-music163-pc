@@ -1,11 +1,9 @@
 <template>
   <div>
-    <Tabbar @activeTab="activeTab" :list="['推荐歌单']"/>
-     <el-carousel :interval="4000" type="card" height="200px">
-    <el-carousel-item v-for="item in banners" :key="item">
-      <img :src="item.imageUrl" :alt="item.typeTitle">
-    </el-carousel-item>
-  </el-carousel>
+    <Tabbar class="tabbar" @activeTab="activeTab" :list="['推荐歌单','歌单']" />
+    <keep-alive>
+    <router-view/>
+    </keep-alive>
   </div>
 </template>
 
@@ -13,8 +11,6 @@
 // tabbar
 import Tabbar from '@/components/tabbar'
 
-// 网络数据
-import { getBanner, getMvData } from '@/api/found/recommend'
 export default {
   name: 'Found',
   components: {
@@ -22,24 +18,22 @@ export default {
   },
   data() {
     return {
-      banners: []
+      pathList: ['personality', 'songList']
     }
   },
-  mounted() {
-    this.getBanner()
-  },
   methods: {
-    // 轮播图
-    async getBanner() {
-      const { code, banners } = await getBanner()
-      if (code !== 200) return this.$message('error', '轮播图获取失败')
-      console.log(banners)
-      this.banners = banners
-    },
     // 选择
     activeTab(index) {
+      this.$router.push('/found/' + this.pathList[index])
       console.log(index)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tabbar{
+  margin-bottom: 20px;
+}
+
+</style>

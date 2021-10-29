@@ -46,6 +46,9 @@ export default {
   color: #000;
   div{
     margin: 0 10px;
+    &:hover{
+      cursor: pointer;
+    }
   }
   .item {
     padding: 2px;

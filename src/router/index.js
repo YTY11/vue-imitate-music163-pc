@@ -3,6 +3,13 @@ import VueRouter from 'vue-router'
 import Layout from '@/layout'
 Vue.use(VueRouter)
 
+// 解决vue-router在3.o版本以上重复点击报错问题
+// 将vue-router的push方法加上catch来解决
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   {
     path: '/',
@@ -15,8 +22,23 @@ const routes = [
       {
         path: '/found',
         name: 'Found',
+        redirect: '/found/personality',
         component: () => import('@/views/found/Found'),
-        meta: { title: '首页' }
+        meta: { title: '发现音乐' },
+        children: [
+          {
+            path: 'personality',
+            name: 'Personality',
+            component: () => import('@/views/found/childComps/Personality'),
+            meta: { title: '发现音乐' }
+          },
+          {
+            path: 'songList',
+            name: 'SongList',
+            component: () => import('@/views/found/childComps/SongList'),
+            meta: { title: '歌单' }
+          }
+        ]
       }
     ]
   },
