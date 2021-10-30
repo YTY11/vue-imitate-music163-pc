@@ -1,8 +1,9 @@
 <template>
-  <aplayer float
+  <!-- <aplayer float
 theme='#41b883'
   :music="{}"
-/>
+/> -->
+<div></div>
 </template>
 
 <script>
@@ -14,7 +15,7 @@ import Aplayer from 'vue-aplayer'
 export default {
   name: 'Footer',
   components: {
-    Aplayer
+    // Aplayer
   },
   methods: {
     play(e, url) {

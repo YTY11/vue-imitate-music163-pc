@@ -1,8 +1,9 @@
 <template>
   <div class="recommend-list">
       <Item v-for="item in list"
+      @click.native="clickPlay(item.id)"
        :key="item.id"
-       :img="item.picUrl"
+       :img="item.coverImgUrl || item.picUrl"
        :name="item.name"
        :playCount="item.playCount"/>
   </div>
@@ -22,6 +23,12 @@ export default {
         return []
       }
     }
+  },
+  methods: {
+    // 点击播放歌单
+    clickPlay(id) {
+      this.$emit('clickPlay', id)
+    }
   }
 }
 </script>
@@ -30,5 +37,6 @@ export default {
 .recommend-list{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

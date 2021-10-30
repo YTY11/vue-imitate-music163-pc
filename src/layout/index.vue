@@ -52,7 +52,7 @@ export default {
   flex-direction: column;
   height: 100%;
   .nav-menu{
-    background: #545C64;
+    background: #808080;
   }
 }
 

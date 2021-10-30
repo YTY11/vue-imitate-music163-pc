@@ -10,11 +10,20 @@ import '@/assets/font/iconfont.css'
 import '@/plugins/element'
 //  animate动画
 import 'animate.css'
-
+// 图片懒加载
+import VueLazyload from 'vue-lazyload'
 // 引入lodash
 import _ from 'lodash'
 Vue.prototype.$_ = _
 Vue.config.productionTip = false
+
+// 配置项
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: require('./assets/img/error_img.png'),
+  loading: require('./assets/img/loading_img.gif'),
+  attempt: 3
+})
 new Vue({
   router,
   store,

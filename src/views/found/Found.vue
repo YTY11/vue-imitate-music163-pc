@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Tabbar class="tabbar" @activeTab="activeTab" :list="['推荐歌单','歌单']" />
+    <Tabbar :pathIndex="pathIndex" class="tabbar" @activeTab="activeTab" :list="['个性推荐','歌单']" />
     <keep-alive>
     <router-view/>
     </keep-alive>
@@ -18,8 +18,19 @@ export default {
   },
   data() {
     return {
-      pathList: ['personality', 'songList']
+      pathList: ['personality', 'songList'],
+      pathIndex: 0
     }
+  },
+  created() {
+    // 刷新页面时判断路径 确认选择的导航
+    this.pathList.forEach((item, index) => {
+      const a = this.$route.path.indexOf(item)
+      if (a > 0) {
+        this.pathIndex = index
+      }
+    })
+    console.log(this.$route.path)
   },
   methods: {
     // 选择

@@ -3,12 +3,12 @@
      <!-- 轮播图区域 -->
      <el-carousel  :interval="4000" type="card" height="180px">
       <el-carousel-item v-for="(item, index) in banners" :key="index">
-        <img :src="item.imageUrl" :alt="item.typeTitle" />
+        <img v-lazy="item.imageUrl" :alt="item.typeTitle" />
       </el-carousel-item>
     </el-carousel>
     <!-- 推荐歌单 -->
     <h3>推荐歌单</h3>
-    <RecommendList :list="result"/>
+    <RecommendList @clickPlay="clickPlay" :list="result"/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@
 import RecommendList from '@/components/recommendList'
 
 // 网络数据
-import { getBanner, getPersonalized } from '@/api/found/recommend'
+import { getBanner, getPersonalized, getSongDetail } from '@/api/found/recommend'
 export default {
   name: 'Personality',
   components: {
@@ -40,15 +40,21 @@ export default {
     async getBanner() {
       const { code, banners } = await getBanner()
       if (code !== 200) return this.$message('error', '轮播图获取失败')
-      // console.log(banners)
       this.banners = banners
     },
     // 推荐歌单
     async getPersonalized() {
       const { result, code } = await getPersonalized()
       if (code !== 200) return this.$message('error', '推荐歌单获取失败')
-      console.log(result)
       this.result = result
+    },
+    // 监听点击的 歌单id 获取歌单详情
+    async clickPlay(id) {
+      console.log(id)
+      const { code, playlist, privileges } = await getSongDetail(id)
+      if (code !== 200) return this.$message('error', '歌单详情数据获取失败')
+      console.log(playlist)
+      console.log(privileges)
     }
   }
 }

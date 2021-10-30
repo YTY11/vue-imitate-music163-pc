@@ -2,10 +2,11 @@
 <div>
 <el-aside width="200px" :class="{'modile' : !device, 'show-modile': !collapse }">
     <el-menu
+    default-active="1"
       class="el-menu-vertical-demo"
-      background-color="#545c64"
+      background-color="#808080"
       text-color="#fff"
-      active-text-color="#ffd04b"
+      active-text-color="#F45252"
       @select="select"
     >
       <el-menu-item index="1">
@@ -71,7 +72,7 @@ export default {
   min-height: 400px;
 }
 .el-aside{
-  background: #545C64;
+  background: #808080;
   overflow-x: hidden;
 }
 .modile{

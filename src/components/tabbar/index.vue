@@ -20,12 +20,19 @@ export default {
       default() {
         return []
       }
+    },
+    pathIndex: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
       activeIndex: 0
     }
+  },
+  mounted() {
+    this.activeIndex = this.pathIndex
   },
   methods: {
     // 选择的选项

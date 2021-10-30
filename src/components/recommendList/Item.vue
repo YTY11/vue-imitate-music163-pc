@@ -4,7 +4,7 @@
       <span class="count"
         ><i class="iconfont icon-bofang01-xianxing"></i>{{ playCount | formatCount }}</span
       >
-      <img :src="img" alt="" />
+      <img v-lazy="img" :key="img" alt="" />
     </div>
     <p>{{ name }}</p>
   </div>
@@ -49,6 +49,7 @@ export default {
   margin: 5px 10px;
   width: 160px;
   div{
+    position: relative;
     img {
       width: 100%;
       height: 100%;
@@ -58,10 +59,31 @@ export default {
          transition: all .2s;
          background: white;
          opacity: .7;
+         box-sizing: border-box;
+         filter: drop-shadow(8px 8px 10px #000);
+         &:after{
+            content:"\e68f";
+            // width: 60px;
+            // height: 60px;
+            display: block;
+            color: red;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: "iconfont" !important;
+            font-size: 60px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
       }
   }
   p {
-    margin: 10px 0;
+    width: 100%;
+    height: 37px;
+    margin: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
