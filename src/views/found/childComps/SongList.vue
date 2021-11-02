@@ -1,7 +1,8 @@
 <template>
   <div class="song-list">
     <!-- 精选歌单区域 -->
-    <div class="highquality" ref="highquality">
+    <div class="highquality" ref="highquality"
+     @click="clickPlay(playlists.id)">
       <div class="fuzzy" :style="background"></div>
       <img v-lazy="playlists.coverImgUrl" alt="" />
       <div class="msg-area">
@@ -176,12 +177,9 @@ export default {
       this.getPlaylist(this.queryInfo)
     },
     // 监听点击的 歌单id 获取歌单详情
-    async clickPlay(id) {
+    clickPlay(id) {
       console.log(id)
-      const { code, playlist, privileges } = await getSongDetail(id)
-      if (code !== 200) return this.$message('error', '歌单详情数据获取失败')
-      console.log(playlist)
-      console.log(privileges)
+      this.$router.push({ name: 'Detail', params: { id } })
     }
   }
 }

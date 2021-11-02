@@ -27,6 +27,7 @@ export default {
   methods: {
     // 点击播放歌单
     clickPlay(id) {
+      console.log(id)
       this.$emit('clickPlay', id)
     }
   }

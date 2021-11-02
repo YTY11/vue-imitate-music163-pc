@@ -54,3 +54,17 @@ export function getMvData() {
     url: '/personalized/mv'
   })
 }
+// 获取用户详情
+export function getUserDetail(uid) {
+  return request({
+    url: `/user/detail?uid=${uid}`
+  })
+}
+// 歌单评论
+export function getCommentPlayList(data) {
+  console.log(data)
+  return request({
+    url: '/comment/playlist',
+    params: data
+  })
+}

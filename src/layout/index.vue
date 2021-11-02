@@ -2,7 +2,7 @@
   <el-container class="layout">
     <!-- 头部区域 -->
     <MusicHeader/>
-    <el-container>
+    <el-container class="center">
     <!-- 侧边导航区域 -->
     <NavMenu class="nav-menu"/>
     <!-- 内容区域 -->
@@ -53,6 +53,9 @@ export default {
   height: 100%;
   .nav-menu{
     background: #808080;
+  }
+  .center{
+    max-height: calc(100vh - 60px);
   }
 }
 

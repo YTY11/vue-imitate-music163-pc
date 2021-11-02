@@ -1,7 +1,7 @@
 <template>
     <!-- 内容展示区域 -->
     <el-main>
-      <el-backtop target=".el-main" bottom="60">
+      <el-backtop target=".el-main" :bottom="60">
         <i class="iconfont icon-fanhuidingbu"></i>
       </el-backtop>
       <router-view />
@@ -19,7 +19,6 @@ export default {
 //   background-color: #eaedf1;
 //   height: 100%;
   .el-main {
-    height: calc(100vh - 60px);
     padding: 15px;
   }
   .el-backtop{

@@ -44,6 +44,18 @@ const routes = [
   },
   {
     path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/details/:id',
+        name: 'Detail',
+        component: () => import('@/views/details'),
+        meta: { title: '详情页' }
+      }
+    ]
+  },
+  {
+    path: '',
     component: () => import('@/views/login/Index'),
     children: [
       {
