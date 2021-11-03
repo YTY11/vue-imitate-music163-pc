@@ -45,9 +45,10 @@ export default {
 
 <style lang="scss" scoped>
 .el-header{
+  color: #000;
   display: flex;
   align-items: center;
-  background: grey;
+  background: #F9F9F9;
   .right{
     flex: 1;
   }

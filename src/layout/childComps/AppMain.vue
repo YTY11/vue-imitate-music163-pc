@@ -1,7 +1,7 @@
 <template>
     <!-- 内容展示区域 -->
     <el-main>
-      <el-backtop target=".el-main" :bottom="60">
+      <el-backtop target=".el-main" :bottom="150">
         <i class="iconfont icon-fanhuidingbu"></i>
       </el-backtop>
       <router-view />

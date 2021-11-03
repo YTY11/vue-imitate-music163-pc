@@ -24,6 +24,8 @@ Vue.use(VueLazyload, {
   loading: require('./assets/img/loading_img.gif'),
   attempt: 3
 })
+// 事件总线
+Vue.prototype.$bus = new Vue()
 new Vue({
   router,
   store,

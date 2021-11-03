@@ -30,15 +30,54 @@ const routes = [
             path: 'personality',
             name: 'Personality',
             component: () => import('@/views/found/childComps/Personality'),
-            meta: { title: '发现音乐' }
+            meta: { title: '个性推荐' }
           },
           {
             path: 'songList',
             name: 'SongList',
             component: () => import('@/views/found/childComps/SongList'),
             meta: { title: '歌单' }
+          },
+          {
+            path: 'rankingList',
+            name: 'RankingList',
+            component: () => import('@/views/found/childComps/RankingList'),
+            meta: { title: '排行榜' }
           }
         ]
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/video',
+        name: 'Video',
+        component: () => import('@/views/video/Video')
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/live',
+        name: 'Live',
+        component: () => import('@/views/live/Live')
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/radio',
+        name: '/Radio',
+        component: () => import('@/views/radio/Radio')
       }
     ]
   },

@@ -36,7 +36,7 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  color: white;
+  color: black;
   white-space: nowrap;
   overflow: hidden;
   p{

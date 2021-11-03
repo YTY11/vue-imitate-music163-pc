@@ -2,26 +2,26 @@
 <div>
 <el-aside width="200px" :class="{'modile' : !device, 'show-modile': !collapse }">
     <el-menu
-    default-active="1"
+    default-active="/found"
       class="el-menu-vertical-demo"
-      background-color="#808080"
-      text-color="#fff"
+      background-color="#F9F9F9"
+      text-color="#000"
       active-text-color="#F45252"
       @select="select"
     >
-      <el-menu-item index="1">
+      <el-menu-item index="/found">
         <i class="iconfont icon-yinle"></i>
         <span slot="title">发现音乐</span>
       </el-menu-item>
-      <el-menu-item index="2">
+      <el-menu-item index="/video">
         <i class="iconfont icon-shipin"></i>
         <span slot="title">视频</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="/live">
         <i class="iconfont icon-zhiboguanli"></i>
         <span slot="title">直播</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="/radio">
         <i class="iconfont icon-guangbo"></i>
         <span slot="title">广播</span>
       </el-menu-item>
@@ -53,6 +53,7 @@ export default {
     // 选择菜单
     select(index, path) {
       console.log(index, path)
+      this.$router.push(index)
       this.$store.commit('app/SET_COLLAPSE', true)
     },
     open() {

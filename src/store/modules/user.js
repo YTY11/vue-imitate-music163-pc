@@ -1,6 +1,6 @@
 // 引入token 设置方法
 import { getToken, setToken, removeToken, setCookieData, getCookieData, removeCookieData } from '@/utility/user'
-
+import { logout } from '@/api/login/login'
 const state = {
   cookie: getCookieData(),
   token: getToken()
@@ -32,7 +32,12 @@ const actions = {
       commit('LOGOUT')
       removeToken()
       removeCookieData()
-      resolve('退出成功')
+      logout().then(res => {
+        resolve('退出成功')
+      })
+        .catch(err => {
+          reject(err)
+        })
     }).catch(err => {
       reject(err)
     })

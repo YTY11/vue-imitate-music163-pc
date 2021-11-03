@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Tabbar :pathIndex="pathIndex" class="tabbar" @activeTab="activeTab" :list="['个性推荐','歌单']" />
+    <Tabbar :pathIndex="pathIndex" class="tabbar" @activeTab="activeTab" :list="['个性推荐','歌单', '排行榜']" />
     <keep-alive>
     <router-view/>
     </keep-alive>
@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      pathList: ['personality', 'songList'],
+      pathList: ['personality', 'songList', 'rankingList'],
       pathIndex: 0
     }
   },

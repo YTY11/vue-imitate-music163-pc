@@ -8,12 +8,12 @@
         <p>{{playlist.name}}</p>
       </div>
       <!-- 歌单信息 -->
-      <div class="song-info" v-if="playlist">
-         <el-button type="danger" class="el-icon-video-play" size="small">播放</el-button>
-         <el-button type="info" size="small" plain class="el-icon-folder-add">收藏({{playlist.subscribedCount | numberFormat}})</el-button>
-         <el-button type="info" size="small" plain class="el-icon-position">分享({{playlist.shareCount | numberFormat}})</el-button>
+      <div class="song-info" v-if="dynamicData">
+         <el-button @click="clickPlay" type="danger" class="el-icon-video-play" size="small">播放</el-button>
+         <el-button type="info" size="small" plain class="el-icon-folder-add">收藏({{dynamicData.bookedCount | numberFormat}})</el-button>
+         <el-button type="info" size="small" plain class="el-icon-position">分享({{dynamicData.shareCount | numberFormat}})</el-button>
          <el-button type="info" size="small" plain class="el-icon-download">下载</el-button>
-         <el-button v-if="commitPlayList" type="info" size="small" plain class="el-icon-edit-outline">评论({{commitPlayList.total | numberFormat}})</el-button>
+         <el-button v-if="commitPlayList" type="info" size="small" plain class="el-icon-edit-outline">评论({{dynamicData.commentCount | numberFormat}})</el-button>
       </div>
        <!-- 创作者信息 -->
       <div class="user">
@@ -61,6 +61,20 @@ export default {
       default() {
         return {}
       }
+    },
+    // 歌单详情动态
+    dynamicData: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    // 歌曲详情
+    songs: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   filters: {
@@ -71,6 +85,15 @@ export default {
     // 数字格式化
     numberFormat(number) {
       return number > 10000 ? (number / 10000).toFixed(2) + '万' : number
+    }
+  },
+  methods: {
+    // 播放
+    clickPlay() {
+      const data = {}
+      data.index = 0
+      data.songs = this.songs
+      this.$bus.$emit('clickPlay', data)
     }
   }
 }

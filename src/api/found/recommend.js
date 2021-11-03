@@ -1,5 +1,5 @@
 import { request } from '@/network/request'
-
+import { dateFormat } from '@/utility/utils'
 // 轮播图数据
 export function getBanner() {
   return request({
@@ -48,6 +48,13 @@ export function getSongDetail(id) {
     url: `/playlist/detail?id=${id}`
   })
 }
+// 歌单详情动态
+// 说明 : 调用后可获取歌单详情动态部分,如评论数,是否收藏,播放数
+export function getPlayListDynamic(id) {
+  return request({
+    url: `/playlist/detail/dynamic?id=${id}`
+  })
+}
 // 推荐 mv
 export function getMvData() {
   return request({
@@ -62,9 +69,43 @@ export function getUserDetail(uid) {
 }
 // 歌单评论
 export function getCommentPlayList(data) {
-  console.log(data)
   return request({
     url: '/comment/playlist',
     params: data
+  })
+}
+// 获取歌曲详情
+export function getSongs(ids) {
+  return request({
+    url: '/song/detail',
+    method: 'post',
+    data: {
+      ids: ids
+    }
+  })
+}
+
+// 歌曲信息 格式
+export class SongList {
+  constructor(song) {
+    this.id = song.id // 歌曲id
+    this.url = song.url // 歌曲url
+    this.type = song.type // 歌曲类型
+    this.name = song.name // 歌曲名字
+    this.album = song.al.name // 专辑名字
+    this.artist = song.ar[0].name // 作者名字
+    this.pic = song.al.picUrl // 图片
+    this.time = dateFormat('mm:ss', new Date(song.dt)) // 歌曲时常
+  }
+}
+
+// 获取歌曲
+export function getSongUrl(id) {
+  return request({
+    url: '/song/url',
+    method: 'post',
+    data: {
+      id: id
+    }
   })
 }

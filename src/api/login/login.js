@@ -83,3 +83,10 @@ export function loginStatus() {
     }
   })
 }
+
+// 退出登陆
+export function logout() {
+  return request({
+    url: '/logout'
+  })
+}

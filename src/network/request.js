@@ -51,7 +51,11 @@ export function request(config) {
   // 就是在请求数据时对数据做一些处理
   instance.interceptors.request.use(config => {
     NProgress.start() // 开启顶部进度条
-    // showFullScreenLoading() // 开启loading加载
+    // 跳过二维码接口
+    const index = config.url.indexOf('/login/qr')
+    if (index < 0) {
+      showFullScreenLoading() // 开启loading加载
+    }
     return config
   }, err => console.log(err))
 
@@ -59,7 +63,7 @@ export function request(config) {
   // 对返回的数据做一些处理
   instance.interceptors.response.use(res => {
     NProgress.done() // 关闭顶部进度条
-    // tryHideFullScreenLoading() // 关闭loading加载
+    tryHideFullScreenLoading() // 关闭loading加载
     return res.data
   }, err => console.log(err))
 

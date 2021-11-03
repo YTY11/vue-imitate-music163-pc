@@ -4,7 +4,7 @@
       <span class="count"
         ><i class="iconfont icon-bofang01-xianxing"></i>{{ playCount | formatCount }}</span
       >
-      <img src="~@/assets/img/error_img.png" :key="img" alt="" />
+      <img v-lazy="img" :key="img" alt="" />
     </div>
     <p>{{ name }}</p>
   </div>

@@ -52,10 +52,10 @@ export default {
   flex-direction: column;
   height: 100%;
   .nav-menu{
-    background: #808080;
+    background: #F9F9F9;
   }
   .center{
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 140px);
   }
 }
 
