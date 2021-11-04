@@ -18,19 +18,23 @@ export default {
   },
   data() {
     return {
-      pathList: ['personality', 'songList', 'rankingList'],
+      pathList: ['Personality', 'SongList', 'RankingList'],
       pathIndex: 0
     }
   },
-  created() {
-    // 刷新页面时判断路径 确认选择的导航
-    this.pathList.forEach((item, index) => {
-      const a = this.$route.path.indexOf(item)
-      if (a > 0) {
-        this.pathIndex = index
-      }
-    })
-    console.log(this.$route.path)
+  watch: {
+    // 监听路由变化
+    $route: {
+      handler(newD, oldD) {
+        const a = this.pathList.indexOf(newD.name)
+        console.log(a)
+        if (a >= 0) {
+          this.pathIndex = a
+        }
+      },
+      deep: true,
+      immediate: true
+    }
   },
   methods: {
     // 选择

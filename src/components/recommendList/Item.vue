@@ -48,19 +48,16 @@ export default {
   box-sizing: border-box;
   margin: 5px 10px;
   width: 160px;
-  div{
-    position: relative;
     img {
       width: 100%;
       height: 100%;
       border-radius: 5px;
-    }
-     &:hover{
+      &:hover{
          transition: all .2s;
          background: white;
          opacity: .7;
          box-sizing: border-box;
-         filter: drop-shadow(8px 8px 10px #000);
+         filter: drop-shadow(4px 8px 10px #000);
          &:after{
             content:"\e68f";
             // width: 60px;
@@ -79,7 +76,7 @@ export default {
         }
 
       }
-  }
+    }
   p {
     width: 100%;
     height: 37px;
@@ -91,6 +88,7 @@ export default {
     -webkit-line-clamp: 2;
   }
   .count {
+    z-index: 999;
     font-size: 12px;
     color: white;
     position: absolute;

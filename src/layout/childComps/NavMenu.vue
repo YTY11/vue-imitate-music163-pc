@@ -73,7 +73,7 @@ export default {
   min-height: 400px;
 }
 .el-aside{
-  background: #808080;
+  background: rgb(249, 249, 249);
   overflow-x: hidden;
 }
 .modile{

@@ -1,7 +1,7 @@
 <template>
   <div class="go">
-    <i class="active el-icon-arrow-left"></i>
-    <i class="active el-icon-arrow-right"></i>
+    <i class="active el-icon-arrow-left" @click="$router.go(-1)"></i>
+    <i class="active el-icon-arrow-right" @click="$router.go(1)"></i>
   </div>
 </template>
 

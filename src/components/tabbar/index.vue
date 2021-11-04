@@ -31,8 +31,14 @@ export default {
       activeIndex: 0
     }
   },
-  mounted() {
-    this.activeIndex = this.pathIndex
+  watch: {
+    pathIndex: {
+      handler(nD, oD) {
+        this.activeIndex = this.pathIndex
+      },
+      deep: true,
+      immediate: true
+    }
   },
   methods: {
     // 选择的选项

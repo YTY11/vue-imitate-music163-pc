@@ -95,7 +95,7 @@ export class SongList {
     this.album = song.al.name // 专辑名字
     this.artist = song.ar[0].name // 作者名字
     this.pic = song.al.picUrl // 图片
-    this.time = dateFormat('mm:ss', new Date(song.dt)) // 歌曲时常
+    this.time = dateFormat('mm:ss', new Date(song.dt)) // 歌曲时长
   }
 }
 
@@ -107,5 +107,11 @@ export function getSongUrl(id) {
     data: {
       id: id
     }
+  })
+}
+// 获取所有排行榜
+export function getToplist() {
+  return request({
+    url: '/toplist'
   })
 }
