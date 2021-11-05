@@ -57,7 +57,10 @@ export function request(config) {
       showFullScreenLoading() // 开启loading加载
     }
     return config
-  }, err => console.log(err))
+  }, err => {
+    console.log(err)
+    tryHideFullScreenLoading()
+  })
 
   // axios 响应拦截
   // 对返回的数据做一些处理
@@ -65,7 +68,10 @@ export function request(config) {
     NProgress.done() // 关闭顶部进度条
     tryHideFullScreenLoading() // 关闭loading加载
     return res.data
-  }, err => console.log(err))
+  }, err => {
+    console.log(err)
+    tryHideFullScreenLoading()
+  })
 
   return instance(config)
 }

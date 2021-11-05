@@ -77,11 +77,7 @@ export function getCommentPlayList(data) {
 // 获取歌曲详情
 export function getSongs(ids) {
   return request({
-    url: '/song/detail',
-    method: 'post',
-    data: {
-      ids: ids
-    }
+    url: `/song/detail?ids=${ids}`
   })
 }
 
@@ -102,11 +98,7 @@ export class SongList {
 // 获取歌曲
 export function getSongUrl(id) {
   return request({
-    url: '/song/url',
-    method: 'post',
-    data: {
-      id: id
-    }
+    url: `/song/url?id=${id}`
   })
 }
 // 获取所有排行榜

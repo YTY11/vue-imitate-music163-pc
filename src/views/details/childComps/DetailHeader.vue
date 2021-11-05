@@ -102,21 +102,20 @@ export default {
 <style lang="scss" scoped>
 .detail-header{
   width: 100%;
-  height: 180px;
   padding: 20px 0;
   display: flex;
+  flex-wrap: wrap;
   img{
-    height: 100%;
+    height: 160px;
     border-radius: 5px;
+    margin-right: 20px;
   }
   .right-msg{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: 20px;
     flex: 1;
-    flex-wrap: nowrap;
-    overflow: hidden;
+    flex-wrap: wrap;
     .title{
       display: flex;
       align-items: center;

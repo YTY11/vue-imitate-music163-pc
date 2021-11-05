@@ -4,8 +4,8 @@
     <div class="top" v-if="playlist">
       <h2>歌曲列表</h2>
       <img src="" alt="">
-      <span>{{ playlist.trackCount | numberFormat }} 首歌曲</span>
-      <span class="right"
+      <span>{{ playlist.trackCount ||  playlist.size | numberFormat }} 首歌曲</span>
+      <span v-if="playlist.playCount" class="right"
         >播放:
         <span class="number">{{ playlist.playCount | numberFormat }}</span>
         次</span

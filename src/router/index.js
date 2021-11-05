@@ -43,6 +43,12 @@ const routes = [
             name: 'RankingList',
             component: () => import('@/views/found/childComps/RankingList'),
             meta: { title: '排行榜' }
+          },
+          {
+            path: 'singer',
+            name: 'Singer',
+            component: () => import('@/views/found/childComps/Singer'),
+            meta: { title: '歌手' }
           }
         ]
       }
@@ -86,10 +92,22 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: '/details/:id',
+        path: '/details/:id/:title',
         name: 'Detail',
         component: () => import('@/views/details'),
         meta: { title: '详情页' }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/singerDetail/:id',
+        name: 'SingerDetail',
+        component: () => import('@/views/singerDetail'),
+        meta: { title: '歌手详情页' }
       }
     ]
   },
@@ -114,8 +132,8 @@ const routes = [
   // 404页面
   {
     path: '*',
-    name: 404,
-    component: () => improt('@/view/error/404'),
+    name: 'Error404',
+    component: () => import('@/views/error/Error404'),
     meta: { title: '页面未找到' }
   }
 ]
