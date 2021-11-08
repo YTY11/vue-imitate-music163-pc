@@ -1,17 +1,18 @@
 <template>
 <el-footer>
-  <aplayer
+  <!-- <aplayer
   fixed
 :music="songList.length > 0 ? song : init"
 :list="songList"
 listFolded
-/>
+/> -->
+<AudioPlay/>
 </el-footer>
 </template>
 
 <script>
 // 自定义 音频播放器组件 样式写好了 功能待开发
-// import AudioPlay from '@/components/audioPlay'
+import AudioPlay from '@/components/audioPlay'
 
 // 引入第三方音频播放器组件 vue-aplayer
 import Aplayer from 'vue-aplayer'
@@ -26,7 +27,8 @@ class Audio {
 export default {
   name: 'Footer',
   components: {
-    Aplayer
+    // Aplayer
+    AudioPlay
   },
   data() {
     return {

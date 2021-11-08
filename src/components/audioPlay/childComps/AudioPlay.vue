@@ -16,7 +16,7 @@
     <!-- 进度条 -->
     <div class="progress">
       <span>{{ time1 }}</span>
-      <el-slider input-size="small" v-model="startTime"></el-slider>
+      <el-slider :show-tooltip="false" input-size="small" v-model="startTime"></el-slider>
       <span>{{ time2 }}</span>
     </div>
   </div>
