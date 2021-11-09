@@ -6,7 +6,7 @@
     <!-- 侧边导航区域 -->
     <NavMenu class="nav-menu"/>
     <!-- 内容区域 -->
-    <AppMain/>
+    <!-- <AppMain/> -->
      </el-container>
     <!-- 底部区域 -->
     <Footer/>
@@ -27,7 +27,7 @@ import resizeHander from '@/mixin/resizeHander'
 export default {
   name: 'Layout',
   components: {
-    AppMain,
+    // AppMain,
     MusicHeader,
     NavMenu,
     Footer
