@@ -92,13 +92,17 @@ export class SongList {
     this.artist = song.ar[0].name // 作者名字
     this.pic = song.al.picUrl // 图片
     this.time = dateFormat('mm:ss', new Date(song.dt)) // 歌曲时长
+    this.lyric = '' // 歌词
   }
 }
 
 // 获取歌曲
 export function getSongUrl(id) {
   return request({
-    url: `/song/url?id=${id}`
+    url: '/song/url',
+    params: {
+      id: id
+    }
   })
 }
 // 获取所有排行榜

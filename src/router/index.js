@@ -92,7 +92,7 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: '/details/:id/:title',
+        path: '/details/:id/:title?',
         name: 'Detail',
         component: () => import('@/views/details'),
         meta: { title: '详情页' }

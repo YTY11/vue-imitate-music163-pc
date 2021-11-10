@@ -36,3 +36,12 @@ export function getAlbumDynamic(id) {
     url: `/album/detail/dynamic?id=${id}`
   })
 }
+// 获取歌词
+export function getLyric(id) {
+  return request({
+    url: '/lyric',
+    params: {
+      id: id
+    }
+  })
+}

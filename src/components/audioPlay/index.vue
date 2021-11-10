@@ -1,12 +1,39 @@
 <template>
   <div class="a-player">
     <!-- 图片名字等信息 -->
-    <AudioImg/>
+    <AudioImg :imgInfo="musicList[musicIndex]"/>
     <!-- 播放功能 -->
-    <AudioPlay @sliderChange="sliderChange" :startPlayTime="startPlayTime" :max="max" :currentTime="currentTime" :duration="duration" @isPlay="isPlay"/>
+    <AudioPlay
+      :lyric="musicList[musicIndex] ? musicList[musicIndex].lyric : ''"
+      :readyState="readyState"
+      :parentIsPlay="parentIsPlay"
+      :startPlayTime="startPlayTime"
+      :max="max"
+      :currentTime="currentTime"
+      :duration="duration"
+      @setPlayWay="setPlayWay"
+      @sliderChange="sliderChange"
+      @isPlay="isPlay"
+      @prevSong="prevSong"
+      @nextSong="nextSong"
+      @getLyrics="getLyrics"
+    />
     <!-- 音量列表 -->
-    <AudioList @setSpeed="setSpeed" @volumeChange="volumeChange" :volume="volume"/>
-    <audio muted ref="audio" src="https://music.163.com/song/media/outer/url?id=33894312.mp3"></audio>
+    <AudioList
+      @setSpeed="setSpeed"
+      @volumeChange="volumeChange"
+      @rowClick="rowClick"
+      :parentIsPlay="parentIsPlay"
+      :musicList="musicList"
+      :musicIndex="musicIndex"
+      :volume="volume"
+    />
+    <audio
+     @error="error"
+      muted
+      ref="audio"
+      :src="playMusic"
+    ></audio>
   </div>
 </template>
 
@@ -28,6 +55,21 @@ export default {
     AudioPlay,
     AudioList
   },
+  props: {
+    // 父组件传来的播放列表
+    pMusicList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    // 父组件传来的播放下标
+    pMusicIndex: {
+      type: Number,
+      default: 0
+    }
+
+  },
   data() {
     return {
       // 播放位置
@@ -40,7 +82,41 @@ export default {
       // 播放时常
       startPlayTime: 0,
       // 音量 1为最大值
-      volume: 1
+      volume: 1,
+      // 播放暂停
+      parentIsPlay: false,
+      // 播放方式 0：循环 1：单曲循环 2：随机
+      playWay: 0,
+      // 音乐列表
+      musicList: [
+        'https://music.163.com/song/media/outer/url?id=33894312.mp3',
+        'https://music.163.com/song/media/outer/url?id=822033.mp3',
+        'https://music.163.com/song/media/outer/url?id=822031.mp3',
+        'https://music.163.com/song/media/outer/url?id=822026.mp3'],
+      // 音乐播放的下标
+      musicIndex: 0,
+      playMusic: '',
+      // 音频准备状态
+      readyState: 0,
+      // 倍速
+      speed: 1.0
+    }
+  },
+  watch: {
+    pMusicList: {
+      handler(nD, oD) {
+        this.musicList = nD
+        this.playMusic = nD[this.musicIndex] ? nD[this.musicIndex].url : []
+      },
+      deep: true,
+      immediate: true
+    },
+    pMusicIndex: {
+      handler(nD, oD) {
+        this.musicIndex = nD
+      },
+      deep: true,
+      immediate: true
     }
   },
   beforeDestroy() {
@@ -56,27 +132,74 @@ export default {
     this.$refs.audio.addEventListener('canplay', () => {
       // 返回音频当前的就绪状态
       console.log(this.$refs.audio.readyState)
+      this.readyState = this.$refs.audio.readyState
       // 音频总长度
       this.max = this.$refs.audio.duration
-      this.duration = formatSeconds(this.$refs.audio.duration - this.$refs.audio.currentTime)
-      console.log(this.duration)
+      this.duration = formatSeconds(
+        this.$refs.audio.duration - this.$refs.audio.currentTime
+      )
+      if (this.readyState === 4) {
+        this.$refs.audio.playbackRate = this.speed
+        this.$refs.audio.play()
+        console.log('paused', !this.$refs.audio.paused)
+        this.parentIsPlay = !this.$refs.audio.paused
+        this.isPlay(!this.$refs.audio.paused)
+      } else {
+        this.$refs.audio.load()
+        this.parentIsPlay = !this.$refs.audio.paused
+        if (this.currentTimeIndex !== '') {
+          clearInterval(this.currentTimeIndex)
+        }
+      }
     })
   },
   methods: {
     // 判断暂停 or 播放
     isPlay(status) {
-      console.log(status)
+      if (this.$refs.audio.paused) {
+        this.parentIsPlay = false
+      } else {
+        this.parentIsPlay = true
+      }
       if (status) {
         // 播放
         this.$refs.audio.play()
-        console.log(this.$refs.audio.readyState)
+        this.parentIsPlay = true
         this.currentTime = formatSeconds(this.$refs.audio.currentTime)
         this.currentTimeIndex = setInterval(() => {
           this.currentTime = formatSeconds(this.$refs.audio.currentTime)
           this.startPlayTime = this.$refs.audio.currentTime
-          this.duration = formatSeconds(this.$refs.audio.duration - this.$refs.audio.currentTime)
+          this.duration = formatSeconds(
+            this.$refs.audio.duration - this.$refs.audio.currentTime
+          )
+          console.log('@', this.$refs.audio.ended)
+          if (this.$refs.audio.ended) {
+            this.parentIsPlay = false
+            this.startPlayTime = 0
+            console.log('###', this.playWay)
+            switch (this.playWay) {
+              case 0:
+                // 循坏播放
+                this.musicIndex++
+                if (this.musicIndex >= this.musicList.length) { this.musicIndex = 0 }
+                this.playMusic = this.musicList[this.musicIndex] ? this.musicList[this.musicIndex].url : []
+                this.$refs.audio.load()
+                break
+              case 1:
+                // 单曲循环
+                // this.playMusic = this.musicList[this.musicIndex]
+                this.$refs.audio.load()
+                break
+              case 2:
+                // 随机
+                this.playMusic = this.$_.sample(this.musicList)
+                this.$refs.audio.load()
+                break
+            }
+          } else {
+            this.parentIsPlay = true
+          }
         }, 1000)
-        console.log(this.$refs.audio.currentTime)
       } else {
         // 暂停
         this.$refs.audio.pause()
@@ -97,14 +220,73 @@ export default {
     },
     // 监听倍速变化设置倍速
     setSpeed(data) {
+      this.speed = data
       this.$refs.audio.playbackRate = data
+    },
+    // 监听播放方式的改变 并设置
+    setPlayWay(data) {
+      this.playWay = data
+    },
+    // 音频资源加载失败
+    error() {
+      if (this.playMusic.length > 0) {
+        this.$message('error', '音频资源加载失败')
+      }
+      this.currentTime = '00:00'
+      this.duration = '00:00'
+      this.parentIsPlay = false
+      if (this.currentTimeIndex !== '') {
+        clearInterval(this.currentTimeIndex)
+      }
+    },
+    // 上一曲
+    prevSong() {
+      if (this.currentTimeIndex !== '') {
+        clearInterval(this.currentTimeIndex)
+      }
+      const length = this.musicList.length
+      if (length <= 0) {
+        return this.$message('info', '暂无歌曲')
+      }
+      this.musicIndex--
+      if (this.musicIndex < 0) {
+        this.musicIndex = length - 1
+      }
+      this.playMusic = this.musicList[this.musicIndex] ? this.musicList[this.musicIndex].url : []
+      this.$refs.audio.load()
+    },
+    // 下一曲
+    nextSong() {
+      if (this.currentTimeIndex !== '') {
+        clearInterval(this.currentTimeIndex)
+      }
+      const length = this.musicList.length
+      if (length <= 0) {
+        return this.$message('info', '暂无歌曲')
+      }
+      this.musicIndex++
+      if (this.musicIndex >= length) {
+        this.musicIndex = 0
+      }
+      this.playMusic = this.musicList[this.musicIndex] ? this.musicList[this.musicIndex].url : []
+      this.$refs.audio.load()
+    },
+    // 选择播放列表中的音乐
+    rowClick(index) {
+      this.musicIndex = index
+      this.playMusic = this.musicList[index] ? this.musicList[index] : []
+    },
+    // 获取歌词
+    getLyrics() {
+      if (this.musicList[this.musicIndex] === undefined) return this.$message('info', '没有可以播放的音频')
+      this.$emit('getLyrics', this.musicList[this.musicIndex].id)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.a-player{
+.a-player {
   display: flex;
   height: 70px;
   padding: 0 10px;

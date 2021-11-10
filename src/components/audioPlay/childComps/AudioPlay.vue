@@ -7,13 +7,13 @@
         <i class="iconfont" :class="wayIcon[wayIndex]" @click="setPlayWay"></i>
       </el-tooltip>
       <!-- 上一曲 -->
-      <i class="iconfont icon-bofang-xiayige-copy"></i>
+      <i @click="prevSong" class="iconfont icon-bofang-xiayige-copy"></i>
       <!-- 开始暂停 -->
       <i @click="play" class="iconfont" :class="[isPlay ? 'icon-bofang02-xianxing' : 'icon-bofang01-xianxing']"></i>
       <!-- 下一曲 -->
-      <i class="iconfont icon-bofang-xiayige"></i>
+      <i @click="nextSong" class="iconfont icon-bofang-xiayige"></i>
       <!-- 歌词 -->
-      <i class="iconfont icon-geciweidianji"></i>
+      <i @click="getLyrics" class="iconfont icon-geciweidianji"></i>
     </div>
     <!-- 进度条 -->
     <div class="progress">
@@ -53,16 +53,38 @@ export default {
       type: Number,
       default: 1
     },
+    // 进度条步长
+    parentIsPlay: {
+      type: Boolean,
+      default: false
+    },
     // 播放时常 即进度条 进度
     startPlayTime: {
       type: Number,
       default: 0
+    },
+    // 音频准备状态 4：可以播放
+    readyState: {
+      type: Number,
+      default: 0
+    },
+    // 歌词
+    lyric: {
+      type: String,
+      default: ''
     }
   },
   watch: {
     startPlayTime: {
       handler(nD, oD) {
         this.startTime = nD
+      },
+      deep: true, // 深度监视
+      immediate: true // 开始就监视
+    },
+    parentIsPlay: {
+      handler(nD, oD) {
+        this.isPlay = nD
       },
       deep: true, // 深度监视
       immediate: true // 开始就监视
@@ -85,6 +107,8 @@ export default {
   methods: {
     // 播放
     play() {
+      // 音频没有加载好不能播放
+      if (this.readyState !== 4) return
       this.isPlay = !this.isPlay
       this.$emit('isPlay', this.isPlay)
     },
@@ -97,6 +121,21 @@ export default {
       this.wayIndex++
       if (this.wayIndex > 2) {
         this.wayIndex = 0
+      }
+      this.$emit('setPlayWay', this.wayIndex)
+    },
+    // 上一曲
+    prevSong() {
+      this.$emit('prevSong')
+    },
+    // 上一曲
+    nextSong() {
+      this.$emit('nextSong')
+    },
+    // 获取歌词
+    getLyrics() {
+      if (this.lyric === '' || this.lyric === undefined) {
+        this.$emit('getLyrics')
       }
     }
   }

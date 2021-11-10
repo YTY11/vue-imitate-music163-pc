@@ -32,5 +32,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.my-popper {
+  padding: 0 !important;
+  margin: 28px !important;
+}
 </style>

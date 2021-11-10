@@ -1,9 +1,9 @@
 <template>
   <div class="audio-img">
-    <img :src="img" alt="">
+    <img v-lazy="imgInfo.pic" alt="">
     <div>
-      <span>{{audioName}}</span>
-      <span>{{authorName}}</span>
+      <span>{{imgInfo.name ? imgInfo.name :  '暂无数据' }}</span>
+      <span>{{imgInfo.artist ? imgInfo.artist :  '暂无数据' }}</span>
     </div>
   </div>
 </template>
@@ -14,6 +14,12 @@ import demoImg from '@/assets/img/logo.png'
 export default {
   name: 'AudioImg',
   props: {
+    imgInfo: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
     // 图片
     img: {
       type: String,
@@ -22,12 +28,12 @@ export default {
     // 音频名字
     audioName: {
       type: String,
-      default: 'demosssssssssssssssssss'
+      default: '暂无'
     },
     // 作者名字
     authorName: {
       type: String,
-      default: 'demo'
+      default: '暂无'
     }
   }
 }

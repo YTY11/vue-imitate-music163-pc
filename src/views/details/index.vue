@@ -102,15 +102,14 @@ export default {
     // 获取歌曲详情
     const songs = await getSongs(songIds)
     if (songs.code !== 200) return this.$message('error', '歌曲详情获取失败')
-
     // 获取歌曲url
     const songUrls = await getSongUrl(songIds)
     if (songUrls.code !== 200) return this.$message('error', '歌曲详情获取失败')
-
     this.songs = []
     songs.songs.forEach((item, index) => {
-      item.url = (songUrls.data)[index].url
-      item.type = (songUrls.data)[index].type
+      const data = this.$_.find(songUrls.data, ['id', item.id])
+      item.url = data.url
+      item.type = data.type
       this.songs.push(new SongList(item))
     })
     console.log(songUrls.data)

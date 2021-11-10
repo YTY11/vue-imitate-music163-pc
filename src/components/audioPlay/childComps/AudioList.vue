@@ -4,18 +4,46 @@
     <i class="iconfont" @click="clickVoiceIcon" :class="voiceIcon"></i>
     <!-- 速度可以设置倍速 -->
     <el-dropdown>
-      <i class="iconfont icon-sudu speed-icon"><span ref="speed" class="speed">x1.0</span></i>
+      <i class="iconfont icon-sudu speed-icon"
+        ><span ref="speed" class="speed">x1.0</span></i
+      >
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item @click.native="setSpeed('x0.5',0.5)">0.5</el-dropdown-item>
-        <el-dropdown-item @click.native="setSpeed('x1.0', 1.0)">1.0(正常)</el-dropdown-item>
-        <el-dropdown-item @click.native="setSpeed('x1.25', 1.25)">1.25</el-dropdown-item>
-        <el-dropdown-item @click.native="setSpeed('x1.75', 1.75)">1.75</el-dropdown-item>
-        <el-dropdown-item @click.native="setSpeed('x2.0', 2.0)">2.0</el-dropdown-item>
-        <el-dropdown-item @click.native="setSpeed('x3.0', 3.0)">3.0</el-dropdown-item>
+        <el-dropdown-item @click.native="setSpeed('x0.5', 0.5)"
+          >0.5</el-dropdown-item
+        >
+        <el-dropdown-item @click.native="setSpeed('x1.0', 1.0)"
+          >1.0(正常)</el-dropdown-item
+        >
+        <el-dropdown-item @click.native="setSpeed('x1.25', 1.25)"
+          >1.25</el-dropdown-item
+        >
+        <el-dropdown-item @click.native="setSpeed('x1.75', 1.75)"
+          >1.75</el-dropdown-item
+        >
+        <el-dropdown-item @click.native="setSpeed('x2.0', 2.0)"
+          >2.0</el-dropdown-item
+        >
+        <el-dropdown-item @click.native="setSpeed('x3.0', 3.0)"
+          >3.0</el-dropdown-item
+        >
       </el-dropdown-menu>
     </el-dropdown>
     <!-- 列表 -->
-    <i class="iconfont icon-liebiao1"></i>
+    <el-popover :visible-arrow="false" popper-class="my-popper " placement="top" width="100%" trigger="click">
+      <el-table :cell-class-name="tableClassName" @row-click="rowClick" :data="musicList" height="400" stripe style="width: 100%">
+        <el-table-column label="#" type="index" width="50">
+          <template slot-scope="scope">
+            <i v-if="scope.$index === musicIndex" class="iconfont icon" :class="[parentIsPlay ? 'icon-bofang02-xianxing' : 'icon-bofang01-xianxing']"></i>
+            <span v-else> {{ scope.$index + 1 }}</span></template>
+        </el-table-column>
+        <el-table-column prop="name" label="歌曲" width="180">
+        </el-table-column>
+        <el-table-column prop="artist" label="歌手" width="180">
+        </el-table-column>
+        <el-table-column prop="time" label="时常"> </el-table-column>
+      </el-table>
+      <i slot="reference" class="iconfont icon-liebiao1"></i>
+    </el-popover>
     <div class="progress">
       <el-slider
         :step="step"
@@ -36,9 +64,24 @@
 export default {
   name: 'AudioList',
   props: {
+    // 音量
     volume: {
       type: Number,
       default: 1
+    },
+    musicList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    musicIndex: {
+      type: Number,
+      default: 0
+    },
+    parentIsPlay: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -52,7 +95,44 @@ export default {
       // 最大音量
       max: 1,
       // 音量调节步长
-      step: 0.1
+      step: 0.1,
+      tableData: [
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-08',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-06',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }
+      ]
     }
   },
   watch: {
@@ -88,6 +168,14 @@ export default {
     setSpeed(data, speed) {
       this.$refs.speed.innerHTML = data
       this.$emit('setSpeed', speed)
+    },
+    // 选择的歌曲
+    rowClick(row, column, event) {
+      this.$emit('rowClick', row.index)
+    },
+    // 为table 行添加索引
+    tableClassName({ row, column, rowIndex, columnIndex }) {
+      row.index = rowIndex
     }
   }
 }
@@ -108,9 +196,9 @@ export default {
       cursor: pointer;
     }
   }
-  .speed-icon{
+  .speed-icon {
     position: relative;
-    .speed{
+    .speed {
       position: absolute;
       font-size: 12px;
       bottom: -13px;
@@ -147,5 +235,11 @@ export default {
 }
 ::v-deep .el-slider__bar {
   background: black;
+}
+::v-deep .cell {
+  white-space: nowrap !important;
+}
+.icon{
+  color: red;
 }
 </style>
