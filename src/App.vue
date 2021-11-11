@@ -36,4 +36,23 @@
   padding: 0 !important;
   margin: 28px !important;
 }
+.lyric {
+  top: auto !important;
+  bottom: 85px !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+  padding: 0 !important;
+  margin: 0px !important;
+  height: 45px !important;
+  overflow: auto;
+}
+.volume {
+  min-width: 38px !important;
+  padding: 0 !important;
+  // top: 547px !important;
+  // left: 525px !important;
+  border: 0 !important;
+  margin: -45px 6px !important;
+  // margin: 0px !important;
+}
 </style>

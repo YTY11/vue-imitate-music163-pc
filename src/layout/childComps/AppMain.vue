@@ -4,13 +4,20 @@
       <el-backtop target=".el-main" :bottom="150">
         <i class="iconfont icon-fanhuidingbu"></i>
       </el-backtop>
-      <router-view />
+      <router-view :key="key"/>
     </el-main>
 </template>
 
 <script>
 export default {
-  name: 'AppMain'
+  name: 'AppMain',
+  computed: {
+    key() {
+      return this.$route.name !== undefined
+        ? this.$route.name + new Date()
+        : this.$route + new Date()
+    }
+  }
 }
 </script>
 

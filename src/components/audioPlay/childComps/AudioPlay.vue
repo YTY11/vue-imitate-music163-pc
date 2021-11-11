@@ -13,20 +13,34 @@
       <!-- 下一曲 -->
       <i @click="nextSong" class="iconfont icon-bofang-xiayige"></i>
       <!-- 歌词 -->
-      <i @click="getLyrics" class="iconfont icon-geciweidianji"></i>
+      <!-- <el-popover :visible-arrow="false" popper-class="lyric" placement="top" width="100%" trigger="manual" v-model="visible">
+        <Scroll class="wrapper" ref="wrapper" v-if="currentLyric.lines">
+            <p v-for="(line,index) in currentLyric.lines" ref="lyricLine"
+              class="text" :key="index">{{line.txt}}</p>
+        </Scroll> -->
+         <el-tooltip class="item" effect="dark" content="功能开发中" placement="top-start">
+           <!-- slot="reference" @click="getLyrics" -->
+      <i  class="iconfont icon-geciweidianji"></i>
+    </el-tooltip>
+    <!-- </el-popover> -->
     </div>
     <!-- 进度条 -->
     <div class="progress">
       <span>{{ currentTime }}</span>
-      <el-slider @change="sliderChange" :min="min" :max="max" :step="step" :show-tooltip="false" input-size="small" v-model="startTime"></el-slider>
+      <el-slider :disabled="max === 0" @change="sliderChange" :min="min" :max="max" :step="step" :show-tooltip="false" input-size="small" v-model="startTime"></el-slider>
       <span>{{ duration }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import Lyric from 'lyric-parser'
+import Scroll from '@/components/scroll/Scroll'
 export default {
   name: 'AudioPlay',
+  components: {
+    // Scroll
+  },
   props: {
     // 音频总长度
     duration: {
@@ -53,7 +67,7 @@ export default {
       type: Number,
       default: 1
     },
-    // 进度条步长
+    // 父组件传来的是否播放
     parentIsPlay: {
       type: Boolean,
       default: false
@@ -84,7 +98,21 @@ export default {
     },
     parentIsPlay: {
       handler(nD, oD) {
+        if (nD && this.currentLyric.length > 0 && this.visible) {
+          this.currentLyric.play()
+        }
         this.isPlay = nD
+      },
+      deep: true, // 深度监视
+      immediate: true // 开始就监视
+    },
+    lyric: {
+      handler(nD, oD) {
+        if (nD !== '') {
+          this.currentLyric = new Lyric(nD, this.handleLyric)
+          this.currentLyric.play()
+          // console.log(data)
+        }
       },
       deep: true, // 深度监视
       immediate: true // 开始就监视
@@ -101,8 +129,14 @@ export default {
       // 播放方式文本
       content: ['循环', '单曲循环', '随机'],
       // 播放方式 index
-      wayIndex: 0
+      wayIndex: 0,
+      // 歌词是否显示
+      visible: false,
+      // 格式化的歌词
+      currentLyric: []
     }
+  },
+  mounted() {
   },
   methods: {
     // 播放
@@ -134,8 +168,20 @@ export default {
     },
     // 获取歌词
     getLyrics() {
-      if (this.lyric === '' || this.lyric === undefined) {
+      this.visible = !this.visible
+      if ((this.lyric === '' || this.lyric === undefined) && this.visible) {
         this.$emit('getLyrics')
+      }
+    },
+    handleLyric({ lineNum, txt }) {
+      // this.currentLineNum = lineNum
+      console.log(lineNum, txt)
+      // 若当前行大于5,开始滚动,以保歌词显示于中间位置
+      if (lineNum > 0) {
+        const lineEl = this.$refs.lyricLine[lineNum]
+        // 结合better-scroll，滚动歌词
+        this.$refs.wrapper.scrollToElement(lineEl, lineNum, 1000)
+        // this.$refs.wrapper
       }
     }
   }
@@ -189,5 +235,9 @@ export default {
 }
 ::v-deep .el-slider__bar {
   background: black;
+}
+.wrapper{
+  height: 45px;
+  overflow: hidden;
 }
 </style>

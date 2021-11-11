@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout'
+import Found from './found'
+import Detail from './detail'
+import Profile from './profile'
 Vue.use(VueRouter)
 
 // 解决vue-router在3.o版本以上重复点击报错问题
@@ -15,45 +18,12 @@ const routes = [
     path: '/',
     redirect: '/found'
   },
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: '/found',
-        name: 'Found',
-        redirect: '/found/personality',
-        component: () => import('@/views/found/Found'),
-        meta: { title: '发现音乐' },
-        children: [
-          {
-            path: 'personality',
-            name: 'Personality',
-            component: () => import('@/views/found/childComps/Personality'),
-            meta: { title: '个性推荐' }
-          },
-          {
-            path: 'songList',
-            name: 'SongList',
-            component: () => import('@/views/found/childComps/SongList'),
-            meta: { title: '歌单' }
-          },
-          {
-            path: 'rankingList',
-            name: 'RankingList',
-            component: () => import('@/views/found/childComps/RankingList'),
-            meta: { title: '排行榜' }
-          },
-          {
-            path: 'singer',
-            name: 'Singer',
-            component: () => import('@/views/found/childComps/Singer'),
-            meta: { title: '歌手' }
-          }
-        ]
-      }
-    ]
-  },
+  // 发现页面路由
+  Found,
+  // 详情页路由
+  ...Detail,
+  // 个人主页
+  ...Profile,
   {
     path: '',
     component: Layout,
@@ -84,30 +54,6 @@ const routes = [
         path: '/radio',
         name: '/Radio',
         component: () => import('@/views/radio/Radio')
-      }
-    ]
-  },
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: '/details/:id/:title?',
-        name: 'Detail',
-        component: () => import('@/views/details'),
-        meta: { title: '详情页' }
-      }
-    ]
-  },
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: '/singerDetail/:id',
-        name: 'SingerDetail',
-        component: () => import('@/views/singerDetail'),
-        meta: { title: '歌手详情页' }
       }
     ]
   },

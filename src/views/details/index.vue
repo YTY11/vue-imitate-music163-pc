@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
      <!-- 头部 -->
-     <AlbumHeader :dynamicData="dynamicData" :playlist="playlist" v-if="title === '专辑'"/>
+     <AlbumHeader :songs="songs" :dynamicData="dynamicData" :playlist="playlist" v-if="title === '专辑'"/>
      <DetailHeader v-else :songs="songs" :dynamicData="dynamicData" :commitPlayList="commitPlayList" :profile="profile" :playlist="playlist"/>
      <el-collapse v-if="title === '专辑'">
       <el-collapse-item title="专辑介绍: ">

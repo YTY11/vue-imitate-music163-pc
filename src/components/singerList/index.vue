@@ -1,7 +1,7 @@
 <template>
   <div class="singer-list" v-if="list">
     <div @click="selectSinger(item.id)" class="list" v-for="item in list" :key="item.id">
-      <img v-lazy="item.picUrl" alt="" />
+      <!-- <img v-lazy="item.picUrl" alt="" /> -->
       <p>{{ item.name }}</p>
     </div>
   </div>

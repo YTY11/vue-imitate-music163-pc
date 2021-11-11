@@ -1,7 +1,21 @@
 <template>
   <div class="audio-list">
     <!-- 音量 -->
-    <i class="iconfont" @click="clickVoiceIcon" :class="voiceIcon"></i>
+    <el-popover :visible-arrow="false" popper-class="volume"  placement="top" width="38"  trigger="click">
+      <div class="progress">
+      <el-slider
+        :step="step"
+        :min="min"
+        :max="max"
+        :vertical="true"
+        :show-tooltip="false"
+        input-size="small"
+        v-model="propVolume"
+        @change="volumeChange"
+      ></el-slider>
+    </div>
+    <i slot="reference" class="iconfont" :class="voiceIcon"></i>
+    </el-popover>
     <!-- 速度可以设置倍速 -->
     <el-dropdown>
       <i class="iconfont icon-sudu speed-icon"
@@ -29,7 +43,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <!-- 列表 -->
-    <el-popover :visible-arrow="false" popper-class="my-popper " placement="top" width="100%" trigger="click">
+    <el-popover :visible-arrow="false" popper-class="my-popper" placement="top" width="100%" trigger="click">
       <el-table :cell-class-name="tableClassName" @row-click="rowClick" :data="musicList" height="400" stripe style="width: 100%">
         <el-table-column label="#" type="index" width="50">
           <template slot-scope="scope">
@@ -44,19 +58,6 @@
       </el-table>
       <i slot="reference" class="iconfont icon-liebiao1"></i>
     </el-popover>
-    <div class="progress">
-      <el-slider
-        :step="step"
-        :min="min"
-        :max="max"
-        v-show="isShow"
-        :vertical="true"
-        :show-tooltip="false"
-        input-size="small"
-        v-model="propVolume"
-        @change="volumeChange"
-      ></el-slider>
-    </div>
   </div>
 </template>
 
@@ -207,7 +208,8 @@ export default {
       text-align: center;
     }
   }
-  .progress {
+}
+.progress {
     height: 50px;
     position: absolute;
     display: flex;
@@ -220,7 +222,6 @@ export default {
       color: darkgray;
     }
   }
-}
 .el-slider {
   width: 100%;
 }

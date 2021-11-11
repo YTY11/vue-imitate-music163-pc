@@ -15,8 +15,6 @@ listFolded
 import AudioPlay from '@/components/audioPlay'
 // 获取歌词
 import { getLyric } from '@/api/found/singer'
-// 引入第三方音频播放器组件 vue-aplayer
-import Aplayer from 'vue-aplayer'
 
 export default {
   name: 'Footer',
@@ -56,22 +54,22 @@ export default {
   methods: {
     async getLyric(id) {
       const { lrc, code } = await getLyric(id)
-      console.log(lrc)
       if (code !== 200) {
         this.$message('error', '歌词获取失败')
         this.lyric = ''
+        return
       }
       this.lyric = lrc.lyric
+      this.songList.forEach(item => {
+        if (item.id === id) {
+          item.lyric = this.lyric
+          console.log(item.lyric)
+        }
+      })
     },
     // 子组件获取歌词回调
     getLyrics(id) {
       this.getLyric(id)
-      this.songList.forEach(item => {
-        if (item.id === id) {
-          console.log('@@@@@@@@@@@')
-          item.lyric = this.lyric
-        }
-      })
     }
   }
 }

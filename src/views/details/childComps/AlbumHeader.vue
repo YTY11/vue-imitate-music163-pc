@@ -59,6 +59,13 @@ export default {
       default() {
         return {}
       }
+    },
+    // 歌曲详情
+    songs: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   filters: {

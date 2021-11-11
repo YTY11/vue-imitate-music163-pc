@@ -11,7 +11,7 @@
       </div>
       <!-- 功能 -->
       <div>
-       <el-button type="danger" size="mini" plain class="el-icon-user">个人主页</el-button>
+       <el-button @click="goProfile(artist.id)" type="danger" size="mini" plain class="el-icon-user">个人主页</el-button>
        <el-button type="danger" size="mini" plain class="el-icon-folder-add">收藏</el-button>
       </div>
       <!-- 作品信息 -->
@@ -35,6 +35,13 @@ export default {
       default() {
         return {}
       }
+    }
+  },
+  methods: {
+    // 进入歌手主页
+    goProfile(id) {
+      console.log('@@@', id)
+      this.$router.push({ name: 'SingerProfile', params: { id } })
     }
   }
 }

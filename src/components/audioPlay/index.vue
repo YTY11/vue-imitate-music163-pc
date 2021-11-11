@@ -29,6 +29,8 @@
       :volume="volume"
     />
     <audio
+      @pause="pause"
+     @play="play"
      @error="error"
       muted
       ref="audio"
@@ -141,11 +143,15 @@ export default {
       if (this.readyState === 4) {
         this.$refs.audio.playbackRate = this.speed
         this.$refs.audio.play()
-        console.log('paused', !this.$refs.audio.paused)
         this.parentIsPlay = !this.$refs.audio.paused
+        if (this.currentTimeIndex !== '') {
+          clearInterval(this.currentTimeIndex)
+          this.currentTimeIndex = ''
+        }
         this.isPlay(!this.$refs.audio.paused)
       } else {
         this.$refs.audio.load()
+        this.$refs.audio.currentTime = this.startPlayTime
         this.parentIsPlay = !this.$refs.audio.paused
         if (this.currentTimeIndex !== '') {
           clearInterval(this.currentTimeIndex)
@@ -172,11 +178,9 @@ export default {
           this.duration = formatSeconds(
             this.$refs.audio.duration - this.$refs.audio.currentTime
           )
-          console.log('@', this.$refs.audio.ended)
           if (this.$refs.audio.ended) {
             this.parentIsPlay = false
             this.startPlayTime = 0
-            console.log('###', this.playWay)
             switch (this.playWay) {
               case 0:
                 // 循坏播放
@@ -192,7 +196,12 @@ export default {
                 break
               case 2:
                 // 随机
-                this.playMusic = this.$_.sample(this.musicList)
+                // eslint-disable-next-line no-case-declarations
+                const sampleData = this.$_.sample(this.musicList)
+                this.musicIndex = this.$_.findIndex(this.musicList, item => {
+                  return item.id === sampleData.id
+                })
+                this.playMusic = sampleData.url
                 this.$refs.audio.load()
                 break
             }
@@ -205,6 +214,7 @@ export default {
         this.$refs.audio.pause()
         if (this.currentTimeIndex !== '') {
           clearInterval(this.currentTimeIndex)
+          this.currentTimeIndex = ''
         }
       }
     },
@@ -241,6 +251,8 @@ export default {
     },
     // 上一曲
     prevSong() {
+      this.currentTime = '00:00'
+      this.duration = '00:00'
       if (this.currentTimeIndex !== '') {
         clearInterval(this.currentTimeIndex)
       }
@@ -257,6 +269,8 @@ export default {
     },
     // 下一曲
     nextSong() {
+      this.currentTime = '00:00'
+      this.duration = '00:00'
       if (this.currentTimeIndex !== '') {
         clearInterval(this.currentTimeIndex)
       }
@@ -280,6 +294,14 @@ export default {
     getLyrics() {
       if (this.musicList[this.musicIndex] === undefined) return this.$message('info', '没有可以播放的音频')
       this.$emit('getLyrics', this.musicList[this.musicIndex].id)
+    },
+    // 监听音频播放时触发
+    play() {
+      this.parentIsPlay = true
+    },
+    // 监听音频暂停时触发
+    pause() {
+      this.parentIsPlay = false
     }
   }
 }

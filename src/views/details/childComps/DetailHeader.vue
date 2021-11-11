@@ -115,7 +115,8 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
-    flex-wrap: wrap;
+    min-width: 300px;
+    overflow: hidden;
     .title{
       display: flex;
       align-items: center;

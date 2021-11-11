@@ -9,7 +9,7 @@ export function getSingerList(info) {
 // 歌手详情
 export function getArtistDetail(id) {
   return request({
-    url: `/artist/detail?id=${id}`
+    url: `/artist/desc?id=${id}`
   })
 }
 // 歌手单曲 部分信息
@@ -21,7 +21,12 @@ export function getArtists(id) {
 // 歌手专辑
 export function getArtistAlbum(info) {
   return request({
-    url: `/artist/album?id=${info.id}&limit=${info.limit}&offset=${info.offset}`
+    url: '/artist/album',
+    params: {
+      id: info.id,
+      limit: info.pagesize,
+      offset: info.pagenum
+    }
   })
 }
 // 获取专辑内容
@@ -40,6 +45,42 @@ export function getAlbumDynamic(id) {
 export function getLyric(id) {
   return request({
     url: '/lyric',
+    params: {
+      id: id
+    }
+  })
+}
+// 获取歌手MV信息
+export function getArtistMV(id) {
+  return request({
+    url: '/artist/mv',
+    params: {
+      id: id
+    }
+  })
+}
+// 获取Mv url
+export function getMvInfo(id) {
+  return request({
+    url: '/mv/url',
+    params: {
+      id: id
+    }
+  })
+}
+// 可获取对应 MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间
+export function getMvDetail(id) {
+  return request({
+    url: '/mv/detail',
+    params: {
+      mvid: id
+    }
+  })
+}
+// 获取相似歌手
+export function getSimiArtist(id) {
+  return request({
+    url: '/simi/artist',
     params: {
       id: id
     }

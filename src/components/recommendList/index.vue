@@ -3,7 +3,7 @@
       <Item v-for="item in list"
       @click.native="clickPlay(item.id)"
        :key="item.id"
-       :img="item.coverImgUrl || item.picUrl"
+       :img="item.coverImgUrl || item.picUrl || item.imgurl16v9"
        :name="item.name"
        :playCount="item.playCount"/>
   </div>
