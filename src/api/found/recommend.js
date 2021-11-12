@@ -33,7 +33,12 @@ export function getHighquality(tag) {
 // 根据分类获取歌单
 export function getPlaylist(queryInfo) {
   return request({
-    url: `/top/playlist?cat=${queryInfo.tag}&offset=${queryInfo.pagenum}&limit=${queryInfo.pagesize}`
+    url: '/top/playlist',
+    params: {
+      cat: queryInfo.tag,
+      offset: (queryInfo.pagenum - 1) * queryInfo.pagesize,
+      limit: queryInfo.pagesize
+    }
   })
 }
 // 全部歌单分类数据
@@ -71,13 +76,31 @@ export function getUserDetail(uid) {
 export function getCommentPlayList(data) {
   return request({
     url: '/comment/playlist',
-    params: data
+    params: {
+      id: data.id,
+      limit: data.pagesize,
+      offset: (data.pagenum - 1) * data.pagesize
+    }
+  })
+}
+// 专辑评论
+export function getCommentAlbum(data) {
+  return request({
+    url: '/comment/album',
+    params: {
+      id: data.id,
+      limit: data.pagesize,
+      offset: (data.pagenum - 1) * data.pagesize
+    }
   })
 }
 // 获取歌曲详情
 export function getSongs(ids) {
   return request({
-    url: `/song/detail?ids=${ids}`
+    url: '/song/detail',
+    params: {
+      ids: ids
+    }
   })
 }
 

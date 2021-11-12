@@ -20,7 +20,7 @@ export function dateFormat(fmt, date) {
   ;
   return fmt
 }
-// 描述格式化
+// 秒数格式化
 export function formatSeconds(value) {
   var theTime = parseInt(value)// 秒
   var theTime1 = 0// 分
@@ -50,4 +50,12 @@ export function formatSeconds(value) {
     result = '' + parseInt(theTime2) + ':' + result// 时
   }
   return result
+}
+
+// 次数格式化
+export function formatCount(count) {
+  if (typeof count !== 'number') {
+    return 0
+  }
+  return count > 10000 ? (count / 10000).toFixed(2) + '万' : count
 }

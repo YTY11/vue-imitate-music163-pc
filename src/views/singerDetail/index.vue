@@ -26,7 +26,7 @@
       </el-tab-pane>
       <el-tab-pane label="所有专辑">
         <SingerList @selectSinger="selectSinger" :list="albums"/>
-        <Pagination :queryInfo="getAlbumInfo" :device="true"/>
+        <Pagination @updataData="updataQueryInfo" :queryInfo="getAlbumInfo" :device="device" :total="artist.albumSize" :pageSizes="[30, 50, 100, 150]"/>
       </el-tab-pane>
       <el-tab-pane label="相关MV">
         <RecommendList @clickPlay="mvPlay" :list="mvList"/>
@@ -73,7 +73,7 @@ export default {
       getAlbumInfo: {
         id: '', // 歌手id
         pagesize: 30, // 每页条数
-        pagenum: 0 // 页码
+        pagenum: 1 // 页码
       },
       // mv 集合
       mvList: [],
@@ -83,6 +83,12 @@ export default {
       introduction: [],
       // 相似歌手
       artists: []
+    }
+  },
+  computed: {
+    // 监听 页面变化 PC or modil
+    device() {
+      return this.$store.state.app.device === 'desktop'
     }
   },
   created() {
@@ -121,7 +127,11 @@ export default {
 
       // 获取专辑
       this.getAlbumInfo.id = id
-      const albums = await getArtistAlbum(this.getAlbumInfo)
+      this.getArtistAlbum(this.getAlbumInfo)
+    },
+    // 获取专辑
+    async getArtistAlbum(id) {
+      const albums = await getArtistAlbum(id)
       if (albums.code !== 200) return this.$message('error', '获取专辑失败')
       // console.log(albums.hotAlbums)
       this.albums = albums.hotAlbums
@@ -177,6 +187,10 @@ export default {
       console.log(id)
       // this.getMvInfo(mvs[0].id)
       this.$router.push({ name: 'MvDetail', params: { id } })
+    },
+    // 专辑页码改变 数据刷新
+    updataQueryInfo() {
+      this.getArtistAlbum(this.getAlbumInfo)
     }
   }
 }

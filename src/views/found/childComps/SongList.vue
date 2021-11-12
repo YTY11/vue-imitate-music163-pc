@@ -16,30 +16,7 @@
     <!-- 歌单区域 -->
     <RecommendList @clickPlay="clickPlay" :list="result"/>
     <!-- 分页区域 -->
-    <!-- pc端显示 -->
-    <el-pagination
-      v-if="device"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="queryInfo.pagenum"
-      :page-sizes="[50, 100, 150, 200]"
-      :page-size="queryInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    >
-    </el-pagination>
-    <!-- 移动端显示 -->
-    <el-pagination
-      v-else
-      background
-      layout="prev, pager, next"
-      @current-change="handleCurrentChange"
-      :total="total"
-      small
-      :pager-count="5"
-      :page-size="queryInfo.pagesize"
-    >
-    </el-pagination>
+    <Pagination @updataData="queryInfoChange" :queryInfo="queryInfo" :device="device" :total="total" :pageSizes="[50, 100, 150, 200]"/>
   </div>
 </template>
 
@@ -48,20 +25,22 @@
 import Tags from '@/components/tags'
 // 推荐列表 组件
 import RecommendList from '@/components/recommendList'
+// 分页
+import Pagination from '@/components/pagination'
 // 网络数据
 import {
   getPlayHot,
   getHighquality,
   getHighqualityTags,
   getTagsListAll,
-  getPlaylist,
-  getSongDetail
+  getPlaylist
 } from '@/api/found/recommend'
 export default {
   name: 'SongList',
   components: {
     Tags,
-    RecommendList
+    RecommendList,
+    Pagination
   },
   computed: {
     // 监听 页面变化 PC or modil
@@ -162,18 +141,8 @@ export default {
       this.getPlaylist(this.queryInfo)
       console.log(tag)
     },
-    // pageSize 每页条数 改变时会触发回调
-    // 重新选择 每页显示的条数
-    handleSizeChange(val) {
-      console.log(val)
-      this.queryInfo.pagesize = val
-      this.getPlaylist(this.queryInfo)
-    },
-    // currentPage 当前页数改变时会触发回调
-    // 跳转页面
-    handleCurrentChange(val) {
-      console.log(val)
-      this.queryInfo.pagenum = val
+    // 页码改变数据刷新
+    queryInfoChange(val) {
       this.getPlaylist(this.queryInfo)
     },
     // 监听点击的 歌单id 获取歌单详情

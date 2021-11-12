@@ -6,7 +6,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
-      :page-sizes="[50, 100, 150, 200]"
+      :page-sizes="pageSizes"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -51,6 +51,13 @@ export default {
     total: {
       type: Number,
       default: 0
+    },
+    // 设置每页条数
+    pageSizes: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   methods: {

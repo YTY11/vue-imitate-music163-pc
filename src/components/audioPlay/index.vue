@@ -287,8 +287,9 @@ export default {
     },
     // 选择播放列表中的音乐
     rowClick(index) {
+      console.log(index)
       this.musicIndex = index
-      this.playMusic = this.musicList[index] ? this.musicList[index] : []
+      this.playMusic = this.musicList[index] ? this.musicList[index].url : []
     },
     // 获取歌词
     getLyrics() {

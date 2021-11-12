@@ -48,7 +48,7 @@ export default {
         area: -1, // 语种
         initial: -1, // 筛选
         limit: 30, // 每页数据条数
-        offset: 0 // 页码
+        offset: 1 // 页码
       },
       // 数据
       artists: []
@@ -69,12 +69,14 @@ export default {
     selectLanguage(index) {
       console.log(this.language[index])
       this.info.area = this.language[index]
+      this.info.offset = 1
       this.getSingerList(this.info)
     },
     // 选择分类
     selectClassify(index) {
       console.log(this.classify[index])
       this.info.type = this.classify[index]
+      this.info.offset = 1
       this.getSingerList(this.info)
     },
     // 选择筛选
@@ -88,6 +90,7 @@ export default {
         data = data.toLowerCase()
       }
       this.info.initial = data
+      this.info.offset = 1
       this.getSingerList(this.info)
       console.log(data)
     },
