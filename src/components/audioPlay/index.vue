@@ -122,7 +122,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$refs.audio.removeEventListener('canplay')
+    this.$refs.audio.removeEventListener('canplay', this.canplay)
   },
   mounted() {
     // 监听音频是否已经就绪可以播放
@@ -131,7 +131,11 @@ export default {
     // 2 = HAVE_CURRENT_DATA - 关于当前播放位置的数据是可用的，但没有足够的数据来播放下一帧/毫秒
     // 3 = HAVE_FUTURE_DATA - 当前及至少下一帧的数据是可用的
     // 4 = HAVE_ENOUGH_DATA - 可用数据足以开始播放
-    this.$refs.audio.addEventListener('canplay', () => {
+    this.$refs.audio.addEventListener('canplay', this.canplay)
+  },
+  methods: {
+    // 监听音频是否就绪
+    canplay() {
       // 返回音频当前的就绪状态
       console.log(this.$refs.audio.readyState)
       this.readyState = this.$refs.audio.readyState
@@ -157,9 +161,7 @@ export default {
           clearInterval(this.currentTimeIndex)
         }
       }
-    })
-  },
-  methods: {
+    },
     // 判断暂停 or 播放
     isPlay(status) {
       if (this.$refs.audio.paused) {

@@ -57,6 +57,12 @@ export default {
       commentsInfo: {}
     }
   },
+  watch: {
+    // 监听路由参数变化刷新页面
+    $route(to, from) {
+      this.$router.go()
+    }
+  },
   created() {
     this.getMvInfo(this.$route.params.id)
     this.getMvDetail(this.$route.params.id)

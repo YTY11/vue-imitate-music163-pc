@@ -2,7 +2,7 @@
   <div>
     <Tabbar :pathIndex="pathIndex" class="tabbar" @activeTab="activeTab" :list="['个性推荐','歌单', '排行榜', '歌手']" />
     <keep-alive>
-    <router-view/>
+      <router-view/>
     </keep-alive>
   </div>
 </template>

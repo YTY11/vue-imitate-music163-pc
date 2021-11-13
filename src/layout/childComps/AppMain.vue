@@ -4,7 +4,9 @@
       <el-backtop target=".el-main" :bottom="150">
         <i class="iconfont icon-fanhuidingbu"></i>
       </el-backtop>
-      <router-view :key="key"/>
+      <!-- <keep-alive exclude="VideoDetail"> -->
+        <router-view/>
+      <!-- </keep-alive> -->
     </el-main>
 </template>
 

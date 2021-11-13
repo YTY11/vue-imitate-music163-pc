@@ -160,7 +160,7 @@ export default {
   .left {
     position: relative;
     .all-tag {
-      z-index: 2;
+      z-index: 9999;
       background-color: #808080;
       color: white;
       overflow: auto;

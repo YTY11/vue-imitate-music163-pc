@@ -3,15 +3,9 @@
   <div class="left">
     <!-- 头部 -->
     <p class="mv-name">
-      <span class="mv-name-one">MV</span>
-      <span class="mv-name-two">{{ mvDetail.name }}</span>
-      <span
-        class="mv-name-three"
-        v-for="(item, index) in mvDetail.artists"
-        :key="item.id"
-        >{{ item.name
-        }}<span v-if="index < mvDetail.artists.length - 1">/</span></span
-      >
+      <span class="mv-name-one">视频</span>
+      <span class="mv-name-two">{{ videoDetail.title }}</span>
+      <span class="mv-name-three" v-if="videoDetail.creator">{{ videoDetail.creator.nickname }}</span>
     </p>
 
     <!-- 播放区域 -->
@@ -30,28 +24,28 @@
       type="danger"
       class="iconfont icon-good video-button"
       plain
-      >({{ MvDetailInfo.likedCount }})</el-button
+      >({{ videoDetailInfo.likedCount }})</el-button
     >
     <el-button
       size="mini"
       type="danger"
       class="el-icon-folder-add video-button"
       plain
-      >({{ mvDetail.subCount }})</el-button
+      >({{ videoDetail.subscribeCount }})</el-button
     >
     <el-button
       size="mini"
       type="danger"
       class="el-icon-position video-button"
       plain
-      >({{ MvDetailInfo.shareCount }})</el-button
+      >({{ videoDetail.shareCount }})</el-button
     >
     <Comment :commentsInfo="commentsInfo" :getCommentInfo="getCommentInfo"/>
     <Pagination
     @updataData="pageChange"
       :queryInfo="getCommentInfo"
       :device="device"
-      :total="MvDetailInfo.commentCount"
+      :total="videoDetailInfo.commentCount"
       :pageSizes="[20, 30, 50, 100]"
     />
   </div>
@@ -78,7 +72,7 @@ export default {
       }
     },
     // 详情
-    mvDetail: {
+    videoDetail: {
       type: Object,
       defatul() {
         return {}
@@ -92,7 +86,7 @@ export default {
       }
     },
     // 点赞品论数等数据
-    MvDetailInfo: {
+    videoDetailInfo: {
       type: Object,
       defatul() {
         return {}

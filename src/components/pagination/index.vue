@@ -8,7 +8,7 @@
       :current-page="queryInfo.pagenum"
       :page-sizes="pageSizes"
       :page-size="queryInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
+      :layout="layout ? layout : 'total, sizes, prev, pager, next, jumper'"
       :total="total"
     >
     </el-pagination>
@@ -16,7 +16,7 @@
     <el-pagination
       v-else
       background
-      layout="prev, pager, next"
+      :layout="layout !== '' ? layout : 'prev, pager, next'"
       @current-change="handleCurrentChange"
       :total="total"
       small
@@ -58,6 +58,10 @@ export default {
       default() {
         return []
       }
+    },
+    layout: {
+      type: String,
+      defatul: undefined
     }
   },
   methods: {

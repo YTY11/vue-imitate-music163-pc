@@ -4,6 +4,7 @@ import Layout from '@/layout'
 import Found from './found'
 import Detail from './detail'
 import Profile from './profile'
+import Video from './video'
 Vue.use(VueRouter)
 
 // 解决vue-router在3.o版本以上重复点击报错问题
@@ -22,19 +23,10 @@ const routes = [
   Found,
   // 详情页路由
   ...Detail,
-  // 个人主页
+  // 个人主页路由
   ...Profile,
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: '/video',
-        name: 'Video',
-        component: () => import('@/views/video/Video')
-      }
-    ]
-  },
+  // 视频路由
+  ...Video,
   {
     path: '',
     component: Layout,

@@ -2,20 +2,21 @@
   <div class="right">
     <h3>MV简介</h3>
     <el-divider></el-divider>
-    <span class="msg">发布时间: {{ mvDetail.publishTime }}</span>
+    <span class="msg" v-if="videoDetail.publishTime">发布时间: {{ dateFormat('YYYY-MM-DD hh:mm:ss', new Date(videoDetail.publishTime)) }}</span>
     <br />
-    <span class="msg">播放次数: {{ formatCount(mvDetail.playCount) }}次</span>
-    <p class="desc">{{ mvDetail.desc }}</p>
+    <span class="msg">播放次数: {{ formatCount(videoDetail.playTime) }}次</span>
+    <p class="desc">{{ videoDetail.description }}</p>
+    <el-tag type="danger" size="mini" v-for="item in videoDetail.videoGroup" :key="item.id">{{item.name}}</el-tag>
     <h3>相关推荐</h3>
     <el-divider></el-divider>
-    <div @click="playRelatedVideo(item.id)" class="simis-mv" v-for="(item, index) in simisMvs" :key="index">
-      <span class="iconfont icon-shipin simis-mv-play-count">{{ formatCount(item.playCount) }}</span>
-      <img v-lazy="item.cover" alt="" />
+    <div @click="playRelatedVideo(item.vid)" class="simis-mv" v-for="(item, index) in relatedAllvideo" :key="index">
+      <span class="iconfont icon-shipin simis-mv-play-count">{{ formatCount(item.playTime) }}</span>
+      <img v-lazy="item.coverUrl" alt="" />
       <div class="simis-mv-info">
-        <span class="one">MV</span>
-        <span class="two">{{ item.name }}</span>
-        <span class="three" v-for="(d, i) in item.artists" :key="d.id"
-          >{{ d.name }} <span v-if="i < item.artists.length - 1">/</span></span
+        <span class="one">视频</span>
+        <span class="two">{{ item.title }}</span>
+        <span class="three" v-for="(d, i) in item.creator" :key="d.userId"
+          >{{ d.userName }} <span v-if="i < item.creator.length - 1">/</span></span
         >
       </div>
     </div>
@@ -24,19 +25,19 @@
 
 <script>
 // 工具类
-import { formatCount } from '@/utility/utils'
+import { formatCount, dateFormat } from '@/utility/utils'
 export default {
   name: 'Right',
   props: {
     // 详情
-    mvDetail: {
+    videoDetail: {
       type: Object,
       defatul() {
         return {}
       }
     },
     // 相关推荐
-    simisMvs: {
+    relatedAllvideo: {
       type: Array,
       defatul() {
         return []
@@ -44,7 +45,7 @@ export default {
     }
   },
   watch: {
-    mvDetail: {
+    videoDetail: {
       handler(nD, oD) {},
       deep: true,
       immediate: true
@@ -52,9 +53,10 @@ export default {
   },
   methods: {
     formatCount,
+    dateFormat,
     // 播放相关视频
     playRelatedVideo(id) {
-      this.$router.push({ name: 'MvDetail', params: { id } })
+      this.$router.push({ name: 'VideoDetail', params: { id } })
     }
   }
 }
@@ -77,6 +79,10 @@ export default {
   .desc {
     font-size: 15px;
     line-height: 20px;
+    white-space: pre-wrap;
+  }
+  .el-tag{
+    margin: 5px;
   }
   .el-divider {
     margin: 10px 0 20px 0;

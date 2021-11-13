@@ -85,6 +85,12 @@ export default {
       artists: []
     }
   },
+  watch: {
+    // 监听路由参数变化刷新页面
+    $route(to, from) {
+      this.$router.go()
+    }
+  },
   computed: {
     // 监听 页面变化 PC or modil
     device() {

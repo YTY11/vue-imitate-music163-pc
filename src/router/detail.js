@@ -35,5 +35,17 @@ export default [
         meta: { title: 'MV详情页' }
       }
     ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/videoDetail/:id',
+        name: 'VideoDetail',
+        component: () => import('@/views/videoDetail'),
+        meta: { title: '视频详情页' }
+      }
+    ]
   }
 ]

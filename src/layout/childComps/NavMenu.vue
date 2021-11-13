@@ -2,7 +2,7 @@
 <div>
 <el-aside width="200px" :class="{'modile' : !device, 'show-modile': !collapse }">
     <el-menu
-    default-active="/found"
+    :default-active="activeMenu"
       class="el-menu-vertical-demo"
       background-color="#F9F9F9"
       text-color="#000"
@@ -43,16 +43,26 @@ export default {
     // 侧边栏是否显示
     collapse() {
       return this.$store.state.app.isCollapse
+    },
+    // 默认选中项
+    activeMenu() {
+      if (!window.sessionStorage.getItem('DEFAULT_MENU')) {
+        window.sessionStorage.setItem('DEFAULT_MENU', '/found')
+      }
+      return window.sessionStorage.getItem('DEFAULT_MENU')
     }
   },
   data() {
     return {
+      path: '/found'
     }
   },
   methods: {
     // 选择菜单
     select(index, path) {
+      window.sessionStorage.setItem('DEFAULT_MENU', index)
       console.log(index, path)
+      this.path = index
       this.$router.push(index)
       this.$store.commit('app/SET_COLLAPSE', true)
     },
