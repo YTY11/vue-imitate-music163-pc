@@ -24,7 +24,7 @@
       </el-form-item>
       <!-- 登录方式切换 -->
       <div  class="captcha-link">
-        <el-link @click="$router.push('/found')">游客访问</el-link>
+        <el-link @click="visitor">游客访问</el-link>
         <el-link type="primary" @click="typeChange('loginData')">{{typeText}}</el-link>
       </div>
       <el-form-item>
@@ -73,6 +73,11 @@ export default {
     }
   },
   methods: {
+    // 游客访问
+    visitor() {
+      window.sessionStorage.setItem('DEFAULT_MENU', '/found')
+      this.$router.push('/found')
+    },
     // 登录
     submitForm(ref) {
       this.$refs[ref].validate(async valid => {

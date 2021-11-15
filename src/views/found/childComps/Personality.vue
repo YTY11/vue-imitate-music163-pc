@@ -31,6 +31,15 @@ export default {
       result: []
     }
   },
+  beforeRouteEnter (to, from, next) {
+    console.log(to, from)
+    if (from.name === 'Login') {
+      next(vm => {
+        vm.$router.go()
+      })
+    }
+    next()
+  },
   mounted() {
     this.getBanner()
     this.getPersonalized()

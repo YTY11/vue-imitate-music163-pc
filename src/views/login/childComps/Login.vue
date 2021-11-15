@@ -19,7 +19,7 @@
     <br />
     <br />
     <el-link @click="loginErweimaChange" type="info" v-if="device"
-      ><i class="iconfont" :class="[isErweima ? 'el-icon-user' : 'icon-erweima']"></i> {{isErweima ? '账号密码登录' : '二维码登录'}}</el-link
+      ><i class="" :class="[isErweima ? 'el-icon-user' : 'iconfont icon-erweima']"></i> {{isErweima ? '账号密码登录' : '二维码登录'}}</el-link
     >
   </div>
 </template>

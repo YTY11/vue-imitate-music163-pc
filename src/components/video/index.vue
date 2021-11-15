@@ -1,7 +1,7 @@
 <template>
   <div v-if="list" class="video">
     <div class="list" v-show="item.data.vid" @click="playVideo(item.data.vid)" v-for="item in list" :key="item.data.vid">
-      <span class="iconfont icon-shipin play-count" v-if="item.data.playTime">{{
+      <span class="iconfont icon-zhiboguanli play-count" v-if="item.data.playTime">{{
         formatCount(item.data.playTime)
       }}</span>
       <img v-if="item.data.coverUrl" v-lazy="item.data.coverUrl" alt="" />

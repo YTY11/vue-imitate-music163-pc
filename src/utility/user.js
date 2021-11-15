@@ -7,7 +7,7 @@ const TOKEN = 'MUSIC-USER-TOKEN'
 
 // 设置token
 export function setToken(token) {
-  Cookies.set(TOKEN, token, { expires: 1, path: '' })
+  Cookies.set(TOKEN, token)
 }
 
 // 获取token

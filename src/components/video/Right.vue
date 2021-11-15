@@ -10,7 +10,7 @@
     <h3>相关推荐</h3>
     <el-divider></el-divider>
     <div @click="playRelatedVideo(item.vid)" class="simis-mv" v-for="(item, index) in relatedAllvideo" :key="index">
-      <span class="iconfont icon-shipin simis-mv-play-count">{{ formatCount(item.playTime) }}</span>
+      <span class="iconfont icon-zhiboguanli simis-mv-play-count">{{ formatCount(item.playTime) }}</span>
       <img v-lazy="item.coverUrl" alt="" />
       <div class="simis-mv-info">
         <span class="one">视频</span>

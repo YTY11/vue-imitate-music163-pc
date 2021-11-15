@@ -46,16 +46,14 @@ export default {
     // 监听是否登陆， 是就获取用户数据
     isLogin: {
       handler(newV, oldV) {
-        if (!newV) {
-          loginStatus().then(res => {
-            const { code, profile } = res.data
-            if (code === 200) {
-              this.profile = profile
-            }
-          }).catch(err => {
-            console.log(err)
-          })
-        }
+        loginStatus().then(res => {
+          const { code, profile } = res.data
+          if (code === 200) {
+            this.profile = profile
+          }
+        }).catch(err => {
+          console.log(err)
+        })
       },
       deep: true, // 开启深度监视
       immediate: true // watch检测到值变化并且立刻使用
@@ -69,6 +67,8 @@ export default {
     // 退出
     logout() {
       this.$store.dispatch('user/logout').then(res => {
+        this.profile = null
+        this.$router.go()
         this.$message('success', res)
       }).catch(err => {
         console.log(err)

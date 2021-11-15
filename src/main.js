@@ -14,6 +14,7 @@ import 'animate.css'
 import VueLazyload from 'vue-lazyload'
 // 引入lodash
 import _ from 'lodash'
+import './permission'
 Vue.prototype.$_ = _
 Vue.config.productionTip = false
 

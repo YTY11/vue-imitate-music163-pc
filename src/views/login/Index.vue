@@ -48,7 +48,7 @@ export default {
       return this.$store.state.app.device === 'desktop'
     }
   },
-  mounted() {
+  created() {
     // this.headLineData()
   },
   methods: {

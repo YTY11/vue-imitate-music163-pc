@@ -13,17 +13,17 @@
         <i class="iconfont icon-yinle"></i>
         <span slot="title">发现音乐</span>
       </el-menu-item>
-      <el-menu-item index="/video">
-        <i class="iconfont icon-shipin"></i>
+      <el-menu-item v-if="token" index="/video">
+        <i class="iconfont icon-zhiboguanli"></i>
         <span slot="title">视频</span>
       </el-menu-item>
-      <el-menu-item index="/live">
-        <i class="iconfont icon-zhiboguanli"></i>
-        <span slot="title">直播</span>
+      <el-menu-item index="/mv">
+        <i class="iconfont icon-MV"></i>
+        <span slot="title">MV</span>
       </el-menu-item>
       <el-menu-item index="/radio">
-        <i class="iconfont icon-guangbo"></i>
-        <span slot="title">广播</span>
+        <i class="iconfont icon-diantaizhibo"></i>
+        <span slot="title">电台</span>
       </el-menu-item>
     </el-menu>
   </el-aside>
@@ -33,9 +33,13 @@
 </template>
 
 <script>
+import { loginStatus } from '@/api/login/login'
 export default {
   name: 'NavMenu',
   computed: {
+    token() {
+      return this.$store.state.user.token
+    },
     // 判断PC 还是 移动
     device() {
       return this.$store.state.app.device === 'desktop'
@@ -60,8 +64,8 @@ export default {
   methods: {
     // 选择菜单
     select(index, path) {
-      window.sessionStorage.setItem('DEFAULT_MENU', index)
       console.log(index, path)
+      window.sessionStorage.setItem('DEFAULT_MENU', index)
       this.path = index
       this.$router.push(index)
       this.$store.commit('app/SET_COLLAPSE', true)

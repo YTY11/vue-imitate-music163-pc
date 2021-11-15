@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { getToken, getCookieData } from '@/utility/user'
 
 import NProgress from 'nprogress' // 进度条
 import 'nprogress/nprogress.css' // 进度条样式
@@ -69,7 +68,7 @@ export function request(config) {
     tryHideFullScreenLoading() // 关闭loading加载
     return res.data
   }, err => {
-    console.log(err)
+    console.dir(err)
     tryHideFullScreenLoading()
   })
 
