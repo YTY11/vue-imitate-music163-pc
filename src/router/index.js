@@ -6,6 +6,7 @@ import Detail from './detail'
 import Profile from './profile'
 import Video from './video'
 import Mv from './mv'
+import Radio from './radio'
 Vue.use(VueRouter)
 
 // 解决vue-router在3.o版本以上重复点击报错问题
@@ -30,17 +31,8 @@ const routes = [
   ...Video,
   // MV页面路由
   Mv,
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: '/radio',
-        name: '/Radio',
-        component: () => import('@/views/radio/Radio')
-      }
-    ]
-  },
+  // 电台页面路由
+  Radio,
   {
     path: '',
     component: () => import('@/views/login/Index'),
