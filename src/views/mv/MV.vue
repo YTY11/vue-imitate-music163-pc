@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      pathList: ['Netease', 'Classify', 'RankingList', 'Singer'],
+      pathList: ['Netease', 'Classify', 'TopMV', 'NewMV'],
       pathIndex: 0
     }
   },

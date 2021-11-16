@@ -20,6 +20,18 @@ export default {
           name: 'Classify',
           component: () => import('@/views/mv/childComps/Classify'),
           meta: { title: 'MV分类' }
+        },
+        {
+          path: '/mv/TopMV',
+          name: 'TopMV',
+          component: () => import('@/views/mv/childComps/TopMV'),
+          meta: { title: 'MV排行榜' }
+        },
+        {
+          path: '/mv/NewMV',
+          name: 'NewMV',
+          component: () => import('@/views/mv/childComps/NewMV'),
+          meta: { title: '最新MV' }
         }
       ]
     }

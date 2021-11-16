@@ -77,6 +77,7 @@ export default {
   .desc {
     font-size: 15px;
     line-height: 20px;
+    white-space: pre-wrap;
   }
   .el-divider {
     margin: 10px 0 20px 0;

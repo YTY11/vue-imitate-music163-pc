@@ -29,3 +29,24 @@ export function getMVAll(info) {
     }
   })
 }
+// MV排行榜
+export function getTopMV(info) {
+  return request({
+    url: '/top/mv',
+    params: {
+      area: info.area,
+      limit: info.pagesize,
+      offset: (info.pagenum - 1) * info.pagesize
+    }
+  })
+}
+// 最新MV
+export function getMVFirst(info) {
+  return request({
+    url: '/mv/first',
+    params: {
+      area: info.area,
+      limit: info.pagesize
+    }
+  })
+}
