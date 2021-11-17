@@ -42,13 +42,6 @@ export default {
       console.log(data)
       this.songList = data.songs
       this.songIndex = data.index
-      // this.songList = []
-      // data.songs.forEach(item => {
-      //   // const lyric = this.getLyric(item.id)
-      //   // item.lyric = lyric
-      //   this.songList.push(new Audio(item))
-      // })
-      // this.song = this.songList[data.index]
     })
   },
   methods: {

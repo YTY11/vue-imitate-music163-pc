@@ -6,7 +6,15 @@ export default {
     {
       path: '/radio',
       name: 'Radio',
-      component: () => import('@/views/radio/Radio')
+      redirect: '/radio/first',
+      component: () => import('@/views/radio/Radio'),
+      children: [
+        {
+          path: '/radio/first',
+          name: 'First',
+          component: () => import('@/views/radio/First')
+        }
+      ]
     },
     {
       path: '/radio/recommendMore',
