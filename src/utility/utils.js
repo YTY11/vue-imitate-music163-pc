@@ -21,7 +21,7 @@ export function dateFormat(fmt, date) {
   return fmt
 }
 // 秒数格式化
-export function formatSeconds(value) {
+export function formatSeconds(value, F = ':', H, M, S) {
   var theTime = parseInt(value)// 秒
   var theTime1 = 0// 分
   var theTime2 = 0// 小时
@@ -42,12 +42,12 @@ export function formatSeconds(value) {
   }
 
   if (theTime1 < 10 > 0) {
-    result = '0' + parseInt(theTime1) + ':' + result// 分，不足两位数，首位补充0，
+    result = '0' + parseInt(theTime1) + M + F + result + S // 分，不足两位数，首位补充0，
   } else {
-    result = '' + parseInt(theTime1) + ':' + result// 分
+    result = '' + parseInt(theTime1) + M + F + result + S// 分
   }
   if (theTime2 > 0) {
-    result = '' + parseInt(theTime2) + ':' + result// 时
+    result = '' + parseInt(theTime2) + H + F + result// 时
   }
   return result
 }

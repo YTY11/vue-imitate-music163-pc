@@ -43,3 +43,16 @@ export function getRecommendType(type) {
     }
   })
 }
+// 电台播放数据格式
+export class DjData {
+  constructor(dj) {
+    this.id = dj.id // 电台id
+    this.url = dj.url // 电台url
+    this.type = dj.type // 电台类型
+    this.name = dj.name // 节目名
+    this.artist = dj.artist // 电台名
+    this.pic = dj.pic // 图片
+    this.time = dj.time // 时长
+    this.lyric = '' // 歌词
+  }
+}

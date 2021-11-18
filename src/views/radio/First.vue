@@ -10,15 +10,16 @@
         </div>
         <el-divider></el-divider>
         <div
-          @click="playDJ(item.id)"
           class="info"
           :class="{ 'info-background': index % 2 === 0 }"
           v-for="(item, index) in recommend"
           :key="item.id"
         >
-          <img v-lazy="item.coverUrl" alt="" />
+          <div @click="playDJ(item.id)" class="img">
+            <img v-lazy="item.coverUrl" alt="" />
+          </div>
           <div class="info-msg">
-            <span>{{ item.name }}</span>
+            <span @click="goRadioShowDetail(item.id)">{{ item.name }}</span>
             <span class="name">{{ item.radio.name }}</span>
           </div>
           <span class="type">{{ item.radio.category }}</span>
@@ -42,9 +43,11 @@
             ><br />
             <span class="rank-two" :class="[item.lastRank > 0 ? setIcon(item.rank, item.lastRank) : 'green']" v-text="rank(item.rank, item.lastRank)"></span>
           </div>
-          <img v-lazy="item.program.coverUrl" alt="" />
+          <div @click="playDJ(item.program.id)" class="img">
+            <img v-lazy="item.program.coverUrl" alt="" />
+          </div>
           <div class="info-msg">
-            <span>{{ item.program.name }}</span>
+            <span @click="goRadioShowDetail(item.id)">{{ item.program.name }}</span>
             <span class="name">{{ item.program.radio.name }}</span>
           </div>
           <span class="type">{{ item.program.radio.category }}</span>
@@ -52,32 +55,39 @@
       </div>
     </div>
     <!-- 音乐推荐电台 -->
-    <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/>
+    <!-- <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/> -->
     <!-- 生活电台 -->
-    <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/>
+    <!-- <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/> -->
     <!-- 情感电台 -->
-    <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/>
+    <!-- <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/> -->
     <!-- 创作翻唱电台 -->
-    <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/>
+    <!-- <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/> -->
     <!-- 知识电台 -->
-    <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/>
+    <!-- <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/> -->
   </div>
 </template>
 
 <script>
 import HotCat from './childComps/HotCat'
 
+// 工具类秒数格式化
+import { formatSeconds } from '@/utility/utils'
+
 // 网络数据
 import {
   getProgramRecommend,
   getProgramToplist,
   getProgramDetail,
-  getRecommendType
+  getRecommendType,
+  DjData
 } from '@/api/radio/radio'
+import {
+  getSongUrl
+} from '@/api/found/recommend'
 export default {
   name: 'First',
   components: {
-    HotCat
+    // HotCat
   },
   data() {
     return {
@@ -122,12 +132,6 @@ export default {
       console.log(toplist)
       this.toplist = toplist
     },
-    // 节目详情
-    async getProgramDetail(id) {
-      const { program, code } = await getProgramDetail(id)
-      if (code !== 200) return this.$message('error', '节目详情获取失败')
-      console.log(program)
-    },
     // 分类推荐
     async getRecommendType() {
       // 音乐推荐
@@ -157,8 +161,24 @@ export default {
       this.knowledgeCateList = this.$_.take(data5.djRadios, 4)
     },
     // 播放
-    playDJ(id) {
-      this.getProgramDetail(id)
+    async playDJ(id) {
+      // 节目详情
+      const { program, code } = await getProgramDetail(id)
+      if (code !== 200) return this.$message('error', '节目详情获取失败')
+      // 播放地址
+      const { code: status, data } = await getSongUrl(program.mainTrackId)
+      if (status !== 200) return this.$message('error', '播放地址获取失败')
+      const djData = {}
+      djData.id = program.mainTrackId // id
+      djData.url = data[0].url // id
+      djData.name = program.name // 节目名
+      djData.artist = program.radio.name // 电台名
+      djData.type = data[0].type // type
+      djData.pic = program.coverUrl // 图片
+      djData.time = formatSeconds(program.duration / 1000) // 图片
+      const playData = new DjData(djData)
+      this.$bus.$emit('clickPlay', { songs: [playData], index: 0 })
+      console.log(playData)
       console.log(id)
     },
     // 选择分类
@@ -186,6 +206,10 @@ export default {
     },
     clickMore(type) {
       console.log(type)
+    },
+    // 进入电台节目详情页
+    goRadioShowDetail(id) {
+      this.$router.push({ name: 'RadioShowDetail', params: { id } })
     }
   }
 }
@@ -209,27 +233,50 @@ export default {
       align-items: center;
       h3 {
         margin: 0;
-        &:hover {
+        color: black;
+        font-weight: bold;
+        &:hover{
           cursor: pointer;
+          border-bottom: 1px solid black;
         }
       }
       span {
         font-size: 14px;
         color: gray;
-        &:hover {
+        &:hover{
           cursor: pointer;
+          border-bottom: 1px solid gray;
         }
       }
     }
     .info {
-      &:hover {
-        cursor: pointer;
-      }
       box-sizing: border-box;
       padding: 10px;
       width: 100%;
       display: flex;
       align-items: center;
+      .img{
+        position: relative;
+        &:hover{
+          cursor: pointer;
+           &:after{
+            content:"\e68f";
+            width: 20px;
+            height: 20px;
+            display: block;
+            color: #f3f3f3;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: "iconfont" !important;
+            font-size: 20px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+        }
+      }
       img {
         width: 40px;
         height: 40px;
@@ -248,6 +295,10 @@ export default {
           text-overflow: ellipsis;
           white-space: nowrap;
           text-align: left;
+          &:hover {
+            cursor: pointer;
+            border-bottom: 1px solid;
+          }
         }
         .name {
           font-size: 12px;
@@ -260,6 +311,11 @@ export default {
         color: gray;
         font-size: 12px;
         border-radius: 5px;
+        &:hover {
+          color: black;
+          border: 1px solid black;
+          cursor: pointer;
+        }
       }
     }
     .rank {

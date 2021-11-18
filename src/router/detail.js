@@ -47,5 +47,17 @@ export default [
         meta: { title: '视频详情页' }
       }
     ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: '/radioShowDetail/:id',
+        name: 'RadioShowDetail',
+        component: () => import('@/views/radioShowDetail'),
+        meta: { title: '电台节目详情页' }
+      }
+    ]
   }
 ]
