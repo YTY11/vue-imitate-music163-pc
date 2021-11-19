@@ -1,5 +1,5 @@
 import { request } from '@/network/request'
-
+import { formatSeconds } from '@/utility/utils'
 // 分类
 export function getDjCatelist() {
   return request({
@@ -43,6 +43,28 @@ export function getRecommendType(type) {
     }
   })
 }
+// 电台节目评论
+export function getCommentDj(info) {
+  return request({
+    url: '/comment/dj',
+    params: {
+      id: info.id,
+      limit: info.pagesize,
+      offset: (info.pagenum - 1) * info.pagesize
+    }
+  })
+}
+// 电台节目
+export function getDjProgram(info) {
+  return request({
+    url: '/dj/program',
+    params: {
+      rid: info.rid,
+      limit: info.pagesize,
+      offset: (info.pagenum - 1) * info.pagesize
+    }
+  })
+}
 // 电台播放数据格式
 export class DjData {
   constructor(dj) {
@@ -53,6 +75,19 @@ export class DjData {
     this.artist = dj.artist // 电台名
     this.pic = dj.pic // 图片
     this.time = dj.time // 时长
+    this.lyric = '' // 歌词
+  }
+}
+export class DjSongData {
+  constructor(song) {
+    this.id = song.id // 歌曲id
+    this.url = song.url // 歌曲url
+    this.type = song.type // 歌曲类型
+    this.name = song.name // 歌曲名字
+    this.album = song.album.name // 专辑名字
+    this.artist = song.artists[0].name // 作者名字
+    this.pic = song.album.picUrl // 图片
+    this.time = formatSeconds(song.duration / 1000) // 歌曲时长
     this.lyric = '' // 歌词
   }
 }

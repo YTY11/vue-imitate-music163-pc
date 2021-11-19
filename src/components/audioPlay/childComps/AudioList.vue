@@ -50,9 +50,9 @@
             <i v-if="scope.$index === musicIndex" class="iconfont icon" :class="[parentIsPlay ? 'icon-bofang02-xianxing' : 'icon-bofang01-xianxing']"></i>
             <span v-else> {{ scope.$index + 1 }}</span></template>
         </el-table-column>
-        <el-table-column prop="name" label="歌曲" width="180">
+        <el-table-column prop="name" label="歌曲">
         </el-table-column>
-        <el-table-column prop="artist" label="歌手" width="180">
+        <el-table-column prop="artist" label="歌手">
         </el-table-column>
         <el-table-column prop="time" label="时常"> </el-table-column>
       </el-table>
@@ -97,43 +97,7 @@ export default {
       max: 1,
       // 音量调节步长
       step: 0.1,
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }
-      ]
+      tableData: []
     }
   },
   watch: {

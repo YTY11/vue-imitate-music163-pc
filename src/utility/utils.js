@@ -21,7 +21,7 @@ export function dateFormat(fmt, date) {
   return fmt
 }
 // 秒数格式化
-export function formatSeconds(value, F = ':', H, M, S) {
+export function formatSeconds(value, F = ':', H = '', M = '', S = '') {
   var theTime = parseInt(value)// 秒
   var theTime1 = 0// 分
   var theTime2 = 0// 小时
