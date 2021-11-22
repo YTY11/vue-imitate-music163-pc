@@ -65,6 +65,15 @@ export function getDjProgram(info) {
     }
   })
 }
+// 电台详情
+export function getDjDetail(id) {
+  return request({
+    url: '/dj/detail',
+    params: {
+      rid: id
+    }
+  })
+}
 // 电台播放数据格式
 export class DjData {
   constructor(dj) {

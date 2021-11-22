@@ -55,15 +55,15 @@
       </div>
     </div>
     <!-- 音乐推荐电台 -->
-    <!-- <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/> -->
+    <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/>
     <!-- 生活电台 -->
-    <!-- <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/> -->
+    <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/>
     <!-- 情感电台 -->
-    <!-- <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/> -->
+    <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/>
     <!-- 创作翻唱电台 -->
-    <!-- <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/> -->
+    <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/>
     <!-- 知识电台 -->
-    <!-- <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/> -->
+    <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/>
   </div>
 </template>
 
@@ -175,7 +175,7 @@ export default {
       djData.artist = program.radio.name // 电台名
       djData.type = data[0].type // type
       djData.pic = program.coverUrl // 图片
-      djData.time = formatSeconds(program.duration / 1000) // 图片
+      djData.time = formatSeconds(program.duration / 1000) // 时间
       const playData = new DjData(djData)
       this.$bus.$emit('clickPlay', { songs: [playData], index: 0 })
       console.log(playData)

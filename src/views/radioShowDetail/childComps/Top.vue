@@ -40,6 +40,8 @@ export default {
     margin-right: 20px;
   }
   .info {
+    flex: 1;
+    min-width: 300px;
     overflow: hidden;
     .radio-show {
       display: flex;

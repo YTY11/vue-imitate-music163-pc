@@ -14,8 +14,8 @@
     </div>
     <div class="right">
       <div class="right-title">
-        <h3>更多节目</h3>
-        <span>更多></span>
+        <h3 @click="goMore">更多节目</h3>
+        <span @click="goMore">更多></span>
       </div>
       <el-divider></el-divider>
       <div @click="goNewDj(item.id)" class="more-item" v-for="item in moreDjShow" :key="item.id">
@@ -128,6 +128,11 @@ export default {
     // 选择新的dj 节目
     goNewDj(id) {
       this.$router.push({ name: 'RadioShowDetail', params: { id } })
+    },
+    // 更多
+    goMore() {
+      const id = this.detailData.radio.id
+      this.$router.push({ name: 'RadioDetail', params: { id } })
     }
   }
 }
@@ -138,6 +143,8 @@ export default {
   width: 100%;
   display: flex;
   .left{
+    overflow: auto;
+    overflow-y: hidden;
     width: 70%;
     .el-button{
       margin: 20px 0 0 10px;
@@ -184,6 +191,7 @@ export default {
         border-radius: 5px;
       }
       .item-info{
+        margin-left: 10px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

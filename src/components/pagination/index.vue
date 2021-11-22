@@ -16,7 +16,7 @@
     <el-pagination
       v-else
       background
-      :layout="layout !== '' ? layout : 'prev, pager, next'"
+      :layout="layout ? layout : 'prev, pager, next'"
       @current-change="handleCurrentChange"
       :total="total"
       small
