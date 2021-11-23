@@ -19,8 +19,8 @@
       >
     </p>
     <!-- 简介 -->
-    <el-collapse>
-      <el-collapse-item title="介绍: ">
+    <el-collapse value="1">
+      <el-collapse-item title="介绍: " name="1">
         <p class="intro">{{ detailData.description }}</p>
       </el-collapse-item>
     </el-collapse>

@@ -55,6 +55,7 @@ export default {
   flex-wrap: wrap;
   img {
     width: 180px;
+    height: 180px;
     border-radius: 5px;
     margin-right: 20px;
   }
@@ -93,9 +94,11 @@ export default {
       flex-wrap: wrap;
       :nth-child(1){
         width: 40px;
+        height: 40px;
       }
       :nth-child(3){
         width: 15px;
+        height: 15px;
       }
       span{
         font-size: 14px;

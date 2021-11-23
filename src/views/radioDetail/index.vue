@@ -17,9 +17,10 @@
               placement="top-start"
             >
               <el-button
-                type="primary"
+               :type="djProgramParams.asc ? 'primary' : 'info' "
                 size="mini"
                 class="iconfont icon-shengxu"
+                @click="setAsc(true)"
               ></el-button>
             </el-tooltip>
             <el-tooltip
@@ -29,9 +30,10 @@
               placement="top-start"
             >
               <el-button
-                type="info"
+                :type="!djProgramParams.asc ? 'primary' : 'info' "
                 size="mini"
                 class="iconfont icon-jiangxu"
+                @click="setAsc(false)"
               ></el-button>
             </el-tooltip>
           </el-button-group>
@@ -69,7 +71,21 @@
       :pageSizes="[30, 40, 50, 60]"
     />
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <span>你可能喜欢</span>
+      <el-divider></el-divider>
+      <div @click="goNewRadio(item.id)" class="right-list" v-for="item in djRadios" :key="item.id">
+        <img v-lazy="item.picUrl" alt="">
+        <div class="right-list-info">
+          <span class="right-title">{{item.name}}</span>
+          <span class="right-name" v-if="item.dj">
+            <span class="by">by</span>
+            {{item.dj.nickname}}
+            <img class="right-name-icon" v-if="item.dj.avatarDetail" v-lazy="item.dj.avatarDetail.identityIconUrl">
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,7 +96,7 @@ import Pagination from '@/components/pagination'
 import { formatSeconds, dateFormat, formatCount } from '@/utility/utils'
 // 网络数据
 import {
-  getProgramDetail,
+  getDjRadioHot,
   DjData,
   getDjProgram,
   getDjDetail
@@ -98,6 +114,13 @@ export default {
       djProgramParams: {
         rid: '',
         pagesize: 30,
+        pagenum: 1,
+        asc: false // 排序 false: （降序 新 -> 旧） true: 升序 旧 -> 新）
+      },
+      // 获取热门电台参数
+      djRadioHotParams: {
+        id: '',
+        pagesize: 6,
         pagenum: 1
       },
       // 节目数据
@@ -113,7 +136,14 @@ export default {
       // table 展示数据
       tableData: [],
       // 节目数
-      total: 0
+      total: 0,
+      // 猜你你喜欢
+      djRadios: []
+    }
+  },
+  watch: {
+    $route() {
+      this.$router.go()
     }
   },
   computed: {
@@ -163,10 +193,23 @@ export default {
       console.log(data)
       console.log(programs)
     },
+    // 电台热门
+    async getDjRadioHot(info) {
+      const { djRadios, code } = await getDjRadioHot(info)
+      if (code !== 200) return this.$message('error', '电台热门获取失败')
+      console.log(djRadios)
+      this.$_.remove(djRadios, (n) => {
+        return n.id + '' === this.$route.params.id
+      })
+      this.djRadios = djRadios
+    },
     // 电台详情
     async getDjDetail(id) {
       const { data, code } = await getDjDetail(id)
       if (code !== 200) return this.$message('error', '电台详情获取失败')
+      // 电台热门
+      this.djRadioHotParams.id = data.categoryId
+      this.getDjRadioHot(this.djRadioHotParams)
       console.log(data)
       this.djDetail = data
     },
@@ -191,6 +234,15 @@ export default {
     // 页码发生改变数据跟新
     pageChange(info) {
       this.getDjProgram(info)
+    },
+    // 进入新的电台详情页
+    goNewRadio(id) {
+      this.$router.push({ name: 'RadioDetail', params: { id } })
+    },
+    // 设置节目顺序
+    setAsc(data) {
+      this.djProgramParams.asc = data
+      this.getDjProgram(this.djProgramParams)
     }
   }
 }
@@ -224,15 +276,63 @@ export default {
     .el-divider {
       margin: 5px 0;
     }
+    .right-list{
+      &:hover{
+        cursor: pointer;
+      }
+      margin: 20px 0;
+      display: flex;
+      img{
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+      .right-list-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        span{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .right-title{
+          font-size: 16px;
+        }
+        .right-name{
+          font-size: 14px;
+          color: gray;
+          .by{
+            color: #C8C7C9;
+          }
+          .right-name-icon{
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+    }
   }
    .el-table {
     &:hover {
       cursor: pointer;
     }
     margin-bottom: 20px;
+    .el-link{
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
-::v-deep .cell {
+::v-deep  .cell {
   white-space: nowrap !important;
+  span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 </style>

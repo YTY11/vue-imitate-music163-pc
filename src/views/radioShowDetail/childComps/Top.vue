@@ -36,6 +36,7 @@ export default {
   flex-wrap: wrap;
   img {
     width: 180px;
+    height: 180px;
     border-radius: 5px;
     margin-right: 20px;
   }

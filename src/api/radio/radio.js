@@ -61,7 +61,8 @@ export function getDjProgram(info) {
     params: {
       rid: info.rid,
       limit: info.pagesize,
-      offset: (info.pagenum - 1) * info.pagesize
+      offset: (info.pagenum - 1) * info.pagesize,
+      asc: info.asc
     }
   })
 }
@@ -71,6 +72,17 @@ export function getDjDetail(id) {
     url: '/dj/detail',
     params: {
       rid: id
+    }
+  })
+}
+// 电台 - 类别热门电台
+export function getDjRadioHot(info) {
+  return request({
+    url: '/dj/radio/hot',
+    params: {
+      cateId: info.id,
+      limit: info.pagesize,
+      offset: (info.pagenum - 1) * info.pagesize
     }
   })
 }

@@ -10,8 +10,8 @@
             v-for="item in list[0]"
             :key="item.id"
           >
-            <img v-lazy="item.pic96x96Url" alt="" />
-            <p>{{ item.name }}</p>
+            <img :src="activeCategory === item.id ?  item.pic84x84IdUrl : item.pic96x96Url" alt="" />
+            <p :style="{'color' : activeCategory === item.id ? 'red' : ''}">{{ item.name }}</p>
           </div>
         </div>
         <div class="category">
@@ -22,8 +22,8 @@
             :key="item.id"
           >
           <!-- pic84x84IdUrl -->
-            <img v-lazy="item.pic96x96Url" alt="" />
-            <p>{{ item.name }}</p>
+            <img :src="activeCategory === item.id ?  item.pic84x84IdUrl : item.pic96x96Url" alt="" />
+            <p :style="{'color' : activeCategory === item.id ? 'red' : ''}">{{ item.name }}</p>
           </div>
         </div>
       </el-carousel-item>
@@ -44,7 +44,18 @@ export default {
   data() {
     return {
       // 分类
-      categories: []
+      categories: [],
+      // 选择的分类编号
+      activeCategory: 0
+    }
+  },
+  watch: {
+    $route: {
+      handler() {
+        this.activeCategory = parseInt(this.$route.params.id)
+      },
+      deep: true,
+      immediate: true
     }
   },
   created() {
@@ -60,6 +71,8 @@ export default {
     },
     // 选择分类
     selectCategory(id) {
+      this.activeCategory = id
+      this.$router.push({ name: 'RadioItem', params: { id } })
       console.log(id)
     }
   }
@@ -94,8 +107,18 @@ export default {
     justify-content: start;
   }
   .el-carousel__item.is-animating {
-    padding: 0 40px;
     box-sizing: border-box;
+    color: #000;
   }
 }
+::v-deep  .el-carousel__button{
+    background: red !important;
+    opacity: .2
+  }
+::v-deep  .el-carousel__arrow--right{
+    right: 0
+  }
+::v-deep  .el-carousel__arrow--left{
+    left: 0
+  }
 </style>

@@ -21,7 +21,7 @@ export default {
     }
   },
   created() {
-    this.getProgramRecommend(50)
+    this.getProgramRecommend(2)
   },
   methods: {
     // 推荐节目
