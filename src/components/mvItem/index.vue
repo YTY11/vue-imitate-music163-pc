@@ -7,7 +7,7 @@
       class="item"
     >
       <div class="play-icon">
-        <!-- <img v-lazy="item.picUrl || item.cover" alt="" /> -->
+        <img v-lazy="item.picUrl || item.cover" alt="" />
       </div>
       <div class="item-info">
         <p>{{ item.name }}</p>

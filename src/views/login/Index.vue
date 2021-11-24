@@ -49,7 +49,7 @@ export default {
     }
   },
   created() {
-    // this.headLineData()
+    this.headLineData()
   },
   methods: {
     // 获取今日头条数据
