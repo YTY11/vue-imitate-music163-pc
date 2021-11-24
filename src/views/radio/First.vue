@@ -22,7 +22,7 @@
             <span @click="goRadioShowDetail(item.id)">{{ item.name }}</span>
             <span @click="goRadioDetail(item.radio.id)" class="name">{{ item.radio.name }}</span>
           </div>
-          <span class="type">{{ item.radio.category }}</span>
+          <span class="type" @click="goRadioItem(item.radio.categoryId)">{{ item.radio.category }}</span>
         </div>
       </div>
       <!-- 节目排行榜 -->
@@ -50,20 +50,20 @@
             <span @click="goRadioShowDetail(item.program.id)">{{ item.program.name }}</span>
             <span @click="goRadioDetail(item.program.radio.id)" class="name">{{ item.program.radio.name }}</span>
           </div>
-          <span class="type">{{ item.program.radio.category }}</span>
+          <span class="type" @click="goRadioItem(item.program.radio.categoryId)">{{ item.program.radio.category }}</span>
         </div>
       </div>
     </div>
     <!-- 音乐推荐电台 -->
-    <!-- <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/> -->
+    <HotCat title="音乐推荐" @clickMore="clickMore" :list="musicCateList" :type="2"/>
     <!-- 生活电台 -->
-    <!-- <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/> -->
+    <HotCat title="生活" @clickMore="clickMore" :list="lifeCateList" :type="6"/>
     <!-- 情感电台 -->
-    <!-- <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/> -->
+    <HotCat title="情感" @clickMore="clickMore" :list="emotionCateList" :type="3"/>
     <!-- 创作翻唱电台 -->
-    <!-- <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/> -->
+    <HotCat title="创作翻唱" @clickMore="clickMore" :list="creationCateList" :type="2001"/>
     <!-- 知识电台 -->
-    <!-- <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/> -->
+    <HotCat title="知识" @clickMore="clickMore" :list="knowledgeCateList" :type="11"/>
   </div>
 </template>
 
@@ -87,7 +87,7 @@ import {
 export default {
   name: 'First',
   components: {
-    // HotCat
+    HotCat
   },
   data() {
     return {
@@ -204,8 +204,8 @@ export default {
         return Math.abs(a)
       }
     },
-    clickMore(type) {
-      console.log(type)
+    clickMore(id) {
+      this.$router.push({ name: 'RadioItem', params: { id } })
     },
     // 进入电台节目详情页
     goRadioShowDetail(id) {
@@ -215,6 +215,10 @@ export default {
     goRadioDetail(id) {
       console.log('********')
       this.$router.push({ name: 'RadioDetail', params: { id } })
+    },
+    // 进入电台子页面
+    goRadioItem(id) {
+      this.$router.push({ name: 'RadioItem', params: { id } })
     }
   }
 }

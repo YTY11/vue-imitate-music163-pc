@@ -68,7 +68,7 @@
       </el-table-column>
       <el-table-column width="100">
         <template slot-scope="scope">
-          <span class="type">{{ scope.row.program.radio.category }}</span>
+          <span class="type" @click.stop="goRadioItem(scope.row.program.radio.categoryId)">{{ scope.row.program.radio.category }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -114,7 +114,7 @@
       </el-table-column>
       <el-table-column width="100">
         <template slot-scope="scope">
-          <span class="type">{{ scope.row.radio.category }}</span>
+          <span class="type" @click.stop="goRadioItem(scope.row.radio.categoryId)">{{ scope.row.radio.category }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -198,6 +198,10 @@ export default {
     // 电台详情页
     goDjDetail(id) {
       this.$router.push({ name: 'RadioDetail', params: { id } })
+    },
+    // 进入电台子页面
+    goRadioItem(id) {
+      this.$router.push({ name: 'RadioItem', params: { id } })
     }
   }
 }

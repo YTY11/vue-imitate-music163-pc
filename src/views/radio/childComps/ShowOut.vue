@@ -20,7 +20,7 @@ export default {
     return {
       // 获取节目榜参数
       topListParams: {
-        pagesize: 2,
+        pagesize: 100,
         pagenum: 1
       },
       // 节目榜数据

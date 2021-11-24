@@ -13,16 +13,13 @@
       <!-- 下一曲 -->
       <i @click="nextSong" class="iconfont icon-bofang-xiayige"></i>
       <!-- 歌词 -->
-      <!-- <el-popover :visible-arrow="false" popper-class="lyric" placement="top" width="100%" trigger="manual" v-model="visible">
+      <el-popover :visible-arrow="false" popper-class="lyric" placement="top" width="100%" trigger="manual" v-model="visible">
         <Scroll class="wrapper" ref="wrapper" v-if="currentLyric.lines">
             <p v-for="(line,index) in currentLyric.lines" ref="lyricLine"
               class="text" :key="index">{{line.txt}}</p>
-        </Scroll> -->
-         <el-tooltip class="item" effect="dark" content="功能开发中" placement="top-start">
-           <!-- slot="reference" @click="getLyrics" -->
-      <i  class="iconfont icon-geciweidianji"></i>
-    </el-tooltip>
-    <!-- </el-popover> -->
+        </Scroll>
+      <i  slot="reference" @click="getLyrics" class="iconfont icon-geciweidianji"></i>
+    </el-popover>
     </div>
     <!-- 进度条 -->
     <div class="progress">
@@ -36,10 +33,11 @@
 <script>
 import Lyric from 'lyric-parser'
 import Scroll from '@/components/scroll/Scroll'
+import LoginCaptchaVue from '../../../views/login/childComps/LoginCaptcha.vue'
 export default {
   name: 'AudioPlay',
   components: {
-    // Scroll
+    Scroll
   },
   props: {
     // 音频总长度
@@ -102,6 +100,16 @@ export default {
           this.currentLyric.play()
         }
         this.isPlay = nD
+        if (nD) {
+          if (this.currentLyric !== '') {
+            this.currentLyric.play()
+            this.currentLyric.seek(Math.floor(this.startPlayTime * 1000))
+          }
+        } else {
+          if (this.currentLyric !== '') {
+            this.currentLyric.stop()
+          }
+        }
       },
       deep: true, // 深度监视
       immediate: true // 开始就监视
@@ -111,7 +119,8 @@ export default {
         if (nD !== '') {
           this.currentLyric = new Lyric(nD, this.handleLyric)
           this.currentLyric.play()
-          // console.log(data)
+          this.currentLyric.seek(Math.floor(this.startPlayTime * 1000))
+          console.log(this.currentLyric)
         }
       },
       deep: true, // 深度监视
@@ -133,7 +142,7 @@ export default {
       // 歌词是否显示
       visible: false,
       // 格式化的歌词
-      currentLyric: []
+      currentLyric: ''
     }
   },
   mounted() {
@@ -144,10 +153,19 @@ export default {
       // 音频没有加载好不能播放
       if (this.readyState !== 4) return
       this.isPlay = !this.isPlay
+      if (this.isPlay) {
+        if ((this.lyric === '' || this.lyric === undefined) && this.visible) {
+          this.$emit('getLyrics')
+        }
+      }
       this.$emit('isPlay', this.isPlay)
     },
     // 进度条拖拽后的值
     sliderChange(data) {
+      console.log('************')
+      if (this.currentLyric !== '') {
+        this.currentLyric.seek(Math.floor(this.startPlayTime * 1000))
+      }
       this.$emit('sliderChange', data)
     },
     // 设置播放方式
@@ -180,7 +198,7 @@ export default {
       if (lineNum > 0) {
         const lineEl = this.$refs.lyricLine[lineNum]
         // 结合better-scroll，滚动歌词
-        this.$refs.wrapper.scrollToElement(lineEl, lineNum, 1000)
+        this.$refs.wrapper.scrollToElement(lineEl, 1, 1000)
         // this.$refs.wrapper
       }
     }
@@ -239,5 +257,10 @@ export default {
 .wrapper{
   height: 45px;
   overflow: hidden;
+  text-align: center;
+  line-height: 45px;
+  p{
+    margin: 0;
+  }
 }
 </style>

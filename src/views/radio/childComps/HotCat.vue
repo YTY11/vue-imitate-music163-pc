@@ -6,7 +6,7 @@
     </div>
     <el-divider></el-divider>
     <div class="list">
-      <div class="item" v-for="item in list" :key="item.id">
+      <div @click="goDjDetail(item.id)" class="item" v-for="item in list" :key="item.id">
         <img v-lazy="item.picUrl" alt="">
         <div class="info">
           <span class="name">{{item.name}}</span>
@@ -42,6 +42,9 @@ export default {
   methods: {
     clickMore(type) {
       this.$emit('clickMore', type)
+    },
+    goDjDetail(id) {
+      this.$router.push({ name: 'RadioDetail', params: { id } })
     }
   }
 }

@@ -4,7 +4,7 @@
       <i class="iconfont icon-shouqianniuicon"></i>
     </div>
     <img src="~@/assets/img/logo.png" alt="">
-    <p>仿某云音乐</p>
+    <h3>听音乐</h3>
   </div>
 </template>
 
@@ -32,6 +32,7 @@ export default {
     width: 50px;
     height: 50px;
     margin: 5px 0;
+    margin-right: 10px;
   }
   height: 100%;
   display: flex;
