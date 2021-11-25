@@ -51,10 +51,25 @@
 .volume {
   min-width: 38px !important;
   padding: 0 !important;
-  // top: 547px !important;
-  // left: 525px !important;
   border: 0 !important;
   margin: -45px 6px !important;
-  // margin: 0px !important;
 }
+// 滚动条样式
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    --webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgba(255,0,0,0.4);
+    --webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.4);
+}
+
 </style>
