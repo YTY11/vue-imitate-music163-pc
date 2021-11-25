@@ -2,10 +2,11 @@
 
 ## 介绍
 > 基于vue2.x 仿照网易云音乐pc端开发的 一款音乐项目 开发参考了[Vue-NeteaseCloud-WebMusicApp項目](https://gitee.com/fudaosheng/Vue-NeteaseCloud-WebMusicApp)
-> * 主要使用了： Vue2.x，Vue-Router，Vuex，Element-ui
+> * 主要使用了： Vue2.x，Vue-Router，Vuex，Axios, Element-ui
 > * 音频播放使用了Audio 对象自定义了audioPlay播放组件目前还在完善中（问题较多）
 > * 歌词滚动使用了lyric-parser 和 better-scroll组件还在完善中（问题较多）
 > * 视频播放使用了vue-video-player组件
+> * 全屏功能使用了screenfull组件
 
 ## 后端api
 > 后端api使用的是NeteaseCloudMusicApi开源项目

@@ -2,6 +2,11 @@
   <div class="right">
     <!-- 其他功能区域 -->
     <div class="left" v-if="device">
+      <!-- 全屏按钮 -->
+        <div class="open-icon iconfont"
+        :class="[!screenfullBut ? 'icon-quanping': 'icon-tuichuquanping']"
+        @click="fullscreen"
+      ></div>
     </div>
     <!-- 头像区域 -->
     <el-dropdown>
@@ -22,6 +27,9 @@
 </template>
 
 <script>
+// 引入全屏插件
+import screenfull from 'screenfull/dist/screenfull'
+
 // 网络数据
 import { loginStatus } from '@/api/login/login'
 export default {
@@ -29,7 +37,8 @@ export default {
   data() {
     return {
       // 用户信息
-      profile: {}
+      profile: {},
+      screenfullBut: false // 全屏按钮状态
     }
   },
   computed: {
@@ -74,6 +83,25 @@ export default {
         console.log(err)
         this.$message('error', '退出失败')
       })
+    },
+    // 全屏功能
+    fullscreen() {
+      if (!screenfull.isEnabled) {
+        this.$notification.open({
+          message: '温馨提示',
+          description:
+            '您的浏览器无法使用全屏功能，请更换谷歌浏览器或者请手动点击F11按钮全屏展示！',
+          duration: 10,
+          placement: 'bottomLeft'
+        })
+        return false
+      }
+      screenfull.toggle()
+      if (screenfull.isFullscreen) {
+        this.screenfullBut = false
+      } else {
+        this.screenfullBut = true
+      }
     }
   }
 }
@@ -100,5 +128,19 @@ export default {
     height: 50px;
     border-radius: 50%;
   }
+  .open-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      float: left;
+      width: 50px;
+      height: 50px;
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        background-color: #eaeaea;
+      }
+    }
 }
 </style>
