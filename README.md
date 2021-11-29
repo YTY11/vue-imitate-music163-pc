@@ -46,7 +46,7 @@
 ## 项目运行
 ### 1.代码克隆到本地
 ```
-git clone https://gitee.com/yty1998/vue-imitate-music163-pc.git
+https://github.com/YTY11/vue-imitate-music163-pc.git
 ```
 ### 2.项目初始化
 ```
